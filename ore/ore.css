@@ -1,0 +1,113 @@
+
+html {
+/* always show vertical scrollbar */
+  min-height: 100%; margin-bottom: 1px;
+}
+
+body, td, th, input {
+  font-family: Trebuchet MS, Verdana, Arial, Sans Serif;
+  font-size: 13px;
+  text-align: left;
+  color: silver;
+  background-color: #203030;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h1, td, th {
+  white-space: nowrap;
+}
+
+div.content {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 720px;
+}
+
+input, select {
+  text-align: left;
+  background-color: black;
+  color: silver;
+  border: 1px solid #405050;
+}
+
+input.submit {
+  text-align: center;
+  background-color: #405050;
+  border: 1px solid #B0B0B0;
+  height: 23px;
+}
+
+td {
+  background-color: #000000;
+}
+
+th {
+  background-color: #405050;
+  color: #B0B0B0;
+}
+
+a {
+  color: #FFCC00;
+}
+
+body {
+  margin: 10px 0 0 0;
+}
+
+p, h1, h2, h3, h4, ul, ol {
+  margin: 0 0 10px 0;
+}
+
+table p, h1, h2, h3, h4, ul, ol {
+  margin: 0;
+}
+
+table {
+  margin: 0 0 10px 0;
+}
+
+/* no borders rules left over */
+
+body {
+	padding: 0;
+}
+
+img {
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+}
+
+td, tr, table {
+	padding: 0;
+	border-width: 0;
+}
+
+td, tr {
+	margin: 0;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+p, h1, h2, h3, h4, ul, ol {
+	padding: 0;
+}
+
+td {
+	vertical-align: top;
+}
+
+td, th {
+  width: 200px;
+}
+
+.tabledatamass {
+  color: #00B0B0;
+}

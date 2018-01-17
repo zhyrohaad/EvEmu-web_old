@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="_your description goes here_" />
+<meta name="keywords" content="_your,keywords,goes,here_" />
+<meta name="author" content="" />
+<title>EVE - Apocrypha | Howto</title>
+<style type="text/css">
+<!--
+body,td,th {
+	color: #CCCCCC;
+	font-family: Tahoma;
+}
+body {
+	background-color: #000000;
+}
+.style6 {font-size: 9px}
+.style7 {
+	font-size: 18px;
+	font-weight: bold;
+}
+.style8 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+
+<body>
+<br />
+<table width="694" height="699" border="0" align="center">
+  <tr>
+    <td width="688" height="573" align="center"><div align="left">
+      <p class="style7">How to Guide:</p>
+      <p>1. Install EVE-Online Client to a dir.<br />
+        2. Launch client but do not download updates and close client.<br />
+        3. Go and open EVE/Cache/<span class="style8">pref.ini</span>, find and edit:</p>
+      <p class="style8">advanced=1<br />
+        debug=1<br />
+        network=1<br />
+        networkAdvanced=1<br />
+        port=26001</p>
+      <p>Note: Some of these don't exist, simply add them in.</p>
+      <p>4. Go to EVE/stdlib/<span class="style8">urllib2.py</span>, use notepad to open, Find &quot;def urlopen&quot; and replace the body and save:</p>
+      <p class="style8">def urlopen(url, data=None):<br />
+        global _opener<br />
+        rewrites = {<br />
+        'http://www.eve-online.com' : 'http://60.240.37.49:80', <br />
+        'http://myeve.eve-online.com' : 'http://60.240.37.49:80/myeve', <br />
+        'https://secure.eve-online.com' : 'http://60.240.37.49:80/secure', <br />
+        'http://support.eve-online.com' : 'http://60.240.37.49:80/supprt' <br />
+        }<br />
+        ourl = url.get_full_url()<br />
+        matched = False<br />
+        for k,v in rewrites.items():<br />
+        if ourl[:len(k)] == k:<br />
+        newurl = v+ourl[len(k):]<br />
+        url = Request(newurl, url.get_data(), url.get_headers())<br />
+        matched = True<br />
+        if not matched:<br />
+        url = None  #prevent it from going anywhere we are not in control of<br />
+        if _opener is None:<br />
+        _opener = build_opener()<br />
+        return _opener.open(url, data)</p>
+      <p>5. Launch EVE and on server box click on 'Transquility'  text  to edit, replace with &quot;<span class="style8">60.240.37.49</span>&quot; and connect with port "<span class="style8">26001</span>".</p>
+      <p><img src="imgs/loginbox.jpg" alt="" width="169" height="48" /></p>
+      <p>IMPORTANT: Currently the game tutorial "Aura" may causes problems, so always permanently disable the tutorial as soon as you get logged in.<br />
+      </p>
+    </div></td>
+  </tr>
+  <tr>
+    <td><a href="index.php">= Back =</a></td>
+  </tr>
+  <tr>
+    <td height="59" align="center"><hr noshade="noshade" />
+    <span class="style6">2008 :: AlphaTest Server </span></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+</body>
+</html>
+

@@ -1,0 +1,201 @@
+<?
+
+/* CREDITS/DISCLAIMER/ETC.....
+original file from unknown source
+misc js/php errors corrected
+moved js to seperate file
+allan 05/19/10
+*/
+
+	if ($f = @fopen('http://eve-central.com/home/marketstat_xml.html?evemon=1', 'r')) 
+		{
+		$content = '';
+		while (!feof($f)) {
+			$content .= fgets($f, 4096);
+			}
+		}
+	fclose($f);
+	
+	preg_match_all("'<mineral>(.*?)</mineral>'si", $content, $items);
+	//print_r($items[1]);
+	foreach($items[1] as $item)
+	{
+		preg_match("'<name.*?>(.*?)</name>'si", $item, $name);
+		preg_match("'<price.*?>(.*?)</price>'si", $item, $price);
+		$result[$name[1]] = $price[1]; // Set only if not empty
+	}	
+	?>
+<html>
+	<head>
+		<title>Allan's Ore Pricer for EVE-IGB</title>
+		<style>
+			body { background-color: #dddddd; font-family: Verdana;}
+			.TblHeader {font-size:20px; font-weight:bold; text-align:center;}
+			.TblHeader2 {font-size:14px; text-align:center; font-weight:bold;}
+			.TblData {font-size:14px; padding:2px;}
+		</style>
+		
+		<script Language="JavaScript" src="ore.js"></script>
+	</head>
+	
+	<body onLoad="javascript:UpdateList();">
+
+		<table border="0" cellpadding="0" cellspacing="0" width="1000">
+			<tr>
+				<td width="45%" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" width="400">
+						<tr>
+							<td class="TblHeader" colspan="2">Material Prices</td>
+						</tr>
+						
+						<tr>
+
+							<td class="TblData">Tritanium:</td>
+							<td class="TblData"><input class="TxtField" id="TritaniumPrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Tritanium'].'"'; ?>></td>
+						</tr>
+						<tr>
+							<td class="TblData">Pyerite:</td>
+							<td class="TblData"><input class="TxtField" id="PyeritePrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Pyerite'].'"'; ?>></td>
+						</tr>
+						<tr>
+
+							<td class="TblData">Mexallon:</td>
+							<td class="TblData"><input class="TxtField" id="MexallonPrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Mexallon'].'"'; ?>></td>
+						</tr>
+						<tr>
+							<td class="TblData">Isogen:</td>
+							<td class="TblData"><input class="TxtField" id="IsogenPrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Isogen'].'"'; ?>></td>
+						</tr>
+						<tr>
+
+							<td class="TblData">Nocxium:</td>
+							<td class="TblData"><input class="TxtField" id="NocxiumPrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Nocxium'].'"'; ?>></td>
+						</tr>
+						<tr>
+							<td class="TblData">Zydrine:</td>
+							<td class="TblData"><input class="TxtField" id="ZydrinePrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Zydrine'].'"'; ?>></td>
+						</tr>
+						<tr>
+
+							<td class="TblData">Megacyte:</td>
+							<td class="TblData"><input class="TxtField" id="MegacytePrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Megacyte'].'"'; ?>></td>
+						</tr>
+						<tr>
+							<td class="TblData">Morphite:</td>
+							<td class="TblData"><input class="TxtField" id="MorphitePrice" onKeyUp="javascript:UpdateList();" onChange="javascript:UpdateList();"<? if (isset($result)) echo ' value="'.$result['Morphite'].'"'; ?>></td>
+						</tr>
+					</table>
+
+				</td>
+				
+				<td width="10%">&nbsp;</td>
+				
+				<td width="45%" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" width="400">
+						<tr>
+							<td class="TblHeader" colspan="3">Asteroids</td>
+						</tr>
+						<tr>
+
+							<td class="TblHeader2">Name</td>
+							<td class="TblHeader2">ISK/m3</td>
+							<td class="TblHeader2">ISK/Unit</td>
+						</tr>
+						
+						<tr>
+							<td class="TblData">Veldspar:</td>
+							<td class="TblData" align="right"><span id="Veldspar_m3">---</span></td>
+
+							<td class="TblData" align="right"><span id="Veldspar_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Scordite:</td>
+							<td class="TblData" align="right"><span id="Scordite_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Scordite_Unit">---</span></td>
+						</tr>
+
+						<tr>
+							<td class="TblData">Plagioclase:</td>
+							<td class="TblData" align="right"><span id="Plagioclase_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Plagioclase_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Pyroxeres:</td>
+
+							<td class="TblData" align="right"><span id="Pyroxeres_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Pyroxeres_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Kernite:</td>
+							<td class="TblData" align="right"><span id="Kernite_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Kernite_Unit">---</span></td>
+
+						</tr>
+						<tr>
+							<td class="TblData">Omber:</td>
+							<td class="TblData" align="right"><span id="Omber_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Omber_Unit">---</span></td>
+						</tr>
+						<tr>
+
+							<td class="TblData">Jaspet:</td>
+							<td class="TblData" align="right"><span id="Jaspet_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Jaspet_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Hemorphite:</td>
+							<td class="TblData" align="right"><span id="Hemorphite_m3">---</span></td>
+
+							<td class="TblData" align="right"><span id="Hemorphite_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Hedbergite:</td>
+							<td class="TblData" align="right"><span id="Hedbergite_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Hedbergite_Unit">---</span></td>
+						</tr>
+
+						<tr>
+							<td class="TblData">Spodumain:</td>
+							<td class="TblData" align="right"><span id="Spodumain_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Spodumain_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Gneiss:</td>
+
+							<td class="TblData" align="right"><span id="Gneiss_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Gneiss_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Dark Ochre:</td>
+							<td class="TblData" align="right"><span id="DarkOchre_m3">---</span></td>
+							<td class="TblData" align="right"><span id="DarkOchre_Unit">---</span></td>
+
+						</tr>
+						<tr>
+							<td class="TblData">Crokite:</td>
+							<td class="TblData" align="right"><span id="Crokite_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Crokite_Unit">---</span></td>
+						</tr>
+						<tr>
+
+							<td class="TblData">Bistot:</td>
+							<td class="TblData" align="right"><span id="Bistot_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Bistot_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Arkonor:</td>
+							<td class="TblData" align="right"><span id="Arkonor_m3">---</span></td>
+
+							<td class="TblData" align="right"><span id="Arkonor_Unit">---</span></td>
+						</tr>
+						<tr>
+							<td class="TblData">Mercoxit:</td>
+							<td class="TblData" align="right"><span id="Mercoxit_m3">---</span></td>
+							<td class="TblData" align="right"><span id="Mercoxit_Unit">---</span></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

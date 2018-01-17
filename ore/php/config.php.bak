@@ -1,0 +1,12 @@
+<?PHP
+
+/* DB Config */
+$mysql_username = "apache";
+$mysql_password = "onlyme";
+$mysql_hostname = "network.ke5jro.net";
+$mysql_dbname = "ore_pricer";
+$mysql_protocol = "mysql";
+
+$DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
+
+?>

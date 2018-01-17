@@ -1,0 +1,11 @@
+# robots.txt generated at http://www.mcanerin.com
+User-agent: *
+Disallow: 
+Crawl-delay: 5
+Disallow: /bfab/
+Disallow: /manual-2.2/
+Disallow: /blog/
+Disallow: /site/
+Disallow: /sql/
+Sitemap: http://eve.alasiya.net/sitemap.xml
+

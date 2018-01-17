@@ -1,0 +1,49 @@
+call.client->SendErrorMsg("blah");
+call.client->SendNotification("OnBillReceived", "*corpid&corprole", &res5, false);
+call.client->SendInfoModalMsg("blah");
+call.client->SendNotifyMsg("blah");
+
+CHANGES.....TO TEST.....
+
+npc ai  ?
+npc spawn  ?
+
+refining/reprocessing (to also use standings)   
+	reproc works. 
+	refin works
+
+agent convo starts (initial mission briefing code)  
+	convo start working.  
+	cannot get mission briefing....no code yet.  31Mar
+
+market updates
+	market data now works for single items
+	price history works 
+	search works
+	corp market data not working....u/k why
+
+manufacturing and research updates.....working 6Apr
+	can select station for assembly
+	can get assembly lines
+	can install job
+	can complete and deliver job
+
+skill training history....working  31Mar
+
+map data started
+	visited systems works
+	bookmarks works
+	jumps/hour works
+	faction kills works
+	kills/podkills works
+	timer for 1 hour/24 hour not implemented.   31Mar
+	
+
+some bookmark changes....updated non-working shit...still has problems
+
+insurance.....
+	ships show up in window
+	money taken
+	db not updated....turned off because recall and return crashes server...   31Mar
+
+
