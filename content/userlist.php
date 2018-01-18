@@ -23,11 +23,13 @@
         ------------------------------------------------------------------------------------
         Author:         Almamu
 */
-?><tr><td class="content" align="center" colspan="3">
+?><tr><td class="content" align="center" colspan="5">
 <h2><font color=blue>Crucible Server Players</font></h2></td></tr>
 <tr><td class="content"><center><strong>Player ID</strong></center></td>
 <td class="content"><center><strong>Account Name</strong></center></td>
-<td class="content"><center><strong>Character (Login Time)</strong></center></td></tr>
+<td class="content"><center><strong>Character 1 (Login Time)</strong></center></td>
+<td class="content"><center><strong>Character 2 (Login Time)</strong></center></td>
+<td class="content"><center><strong>Character 3 (Login Time)</strong></center></td></tr>
 <?php
 	$pInfo = array( array() );
 
@@ -80,6 +82,18 @@
 		}else{
 			echo '<font color=red>None</font></center></td><td class="content"><center>';
 		}
+        if( isset( $pInfo[ $pCount ][4] ) )
+        {
+            echo '<a href="?p=characterinfo&c='.get_character_id( $pInfo[ $pCount ][4] ).'">'.$pInfo[ $pCount ][4].'</a></center></td><td class="content"><center>';
+        }else{
+            echo '<font color=red>None</center></td><td class="content"><center>';
+        }
+        if( isset( $pInfo[ $pCount ][6] ) )
+        {
+            echo '<a href="?p=characterinfo&c='.get_character_id( $pInfo[ $pCount ][6] ).'">'.$pInfo[ $pCount ][6].'</a></center></td><td class="content"><center>';
+        }else{
+            echo '<font color=red>None</center></td></tr>';
+        }
 
 		$pCount += 1;
 	}

@@ -39,7 +39,7 @@
 	function item_exists( $itemID )
 	{
 		global $connections;
-		$query = "SELECT typeID FROM invtypes WHERE typeID=".$itemID;
+		$query = "SELECT typeID FROM invTypes WHERE typeID=".$itemID;
 		if($result = mysql_query( $query, $connections['cruc'] ))
         {
             $row = mysql_fetch_array( $result, MYSQL_ASSOC );
@@ -211,7 +211,7 @@
 
 		$connections = array(
 			'cruc' => $sql_crucible_connection,
-                        'test' => $sql_crucible_test_connection,
+            'test' => $sql_crucible_test_connection,
 			'apoc' => $sql_apocrypha_connection,
 			'inc' => $sql_incursion_connection,
 			'portal' => $sql_portal_connection
@@ -266,7 +266,7 @@
 	{
 		global $connections;
 		include( 'config.php' );
-		$query = "SELECT characterID FROM character_ WHERE accountID=".$accountID.";";
+		$query = "SELECT characterID FROM chrCharacters WHERE accountID=".$accountID.";";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
@@ -278,7 +278,7 @@
 	{
 		global $connections;
 		include( 'config.php' );
-		$query = "SELECT characterID FROM character_ WHERE accountID=".$accountID.";";
+		$query = "SELECT characterID FROM chrCharacters WHERE accountID=".$accountID.";";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
@@ -350,12 +350,12 @@
 			return 'Anonymous';
 		}
 
-		$query = "SELECT itemName FROM entity WHERE itemID=".$characterID.";";
+		$query = "SELECT name FROM chrCharacters WHERE characterID=".$characterID.";";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
 
-		return $row[ 'itemName' ];
+		return $row[ 'name' ];
 	}
 
 	function get_character_id( $characterName )
@@ -366,19 +366,19 @@
 			return '0';
 		}
 
-		$query = "SELECT itemID FROM entity WHERE itemName='".$characterName."';";
+		$query = "SELECT characterID FROM chrCharacters WHERE name='".$characterName."';";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
 
-		return $row[ 'itemID' ];
+		return $row[ 'characterID' ];
 	}
 
 	function get_corporation_name( $corporationID )
 	{
 		global $connections;
 		if( empty( $corporationID ) ) return 'None';
-		$query = "SELECT corporationName FROM corporation WHERE corporationID=".$corporationID.";";
+		$query = "SELECT corporationName FROM crpCorporation WHERE corporationID=".$corporationID.";";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
@@ -457,7 +457,7 @@
 	function get_character_info( $characterID )
 	{
 		global $connections;
-		$query = "SELECT corporationID, securityRating, ancestryID, careerID, schoolID, careerSpecialityID, gender, stationID FROM character_ WHERE characterID=".$characterID.";";
+		$query = "SELECT corporationID, securityRating, ancestryID, careerID, schoolID, careerSpecialityID, gender, stationID FROM chrCharacters WHERE characterID=".$characterID.";";
 		$result = @mysql_query( $query, $connections['cruc'] );
 
 		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );

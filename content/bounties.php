@@ -36,11 +36,11 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
 
     <?php
     /* AI 	characterID 	ownerID 	bounty 	timePlaced */
-    $query="SELECT b.characterID,	c.name,	co.corporationName,	b.bounty,	b.timePlaced,	b.ownerID,	c2.name,
-    c.securityRating,	co.tickerName
+    $query="SELECT b.characterID,   c.name, co.corporationName, b.bounty,   b.timePlaced,   b.ownerID,  c2.name,
+    c.securityRating,   co.tickerName
       FROM webBounties AS b  LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
-      LEFT JOIN corporation AS co USING (corporationID)  ORDER BY b.bounty DESC;";
+      LEFT JOIN crpCorporation AS co ON c.corporationID = co.corporationID  ORDER BY b.bounty DESC;";
     if($result=mysql_query($query,$db)) {
         while($row=mysql_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));

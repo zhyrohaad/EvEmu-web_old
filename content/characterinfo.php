@@ -40,7 +40,7 @@
 			$accountID = 0;
 		}
 
-		$query = "SELECT characterID, itemName AS characterName FROM character_ LEFT JOIN entity ON characterID = itemID WHERE accountID=".$accountID." AND itemID >= 140000000;";
+		$query = "SELECT characterID, name AS characterName FROM chrCharacters WHERE accountID=".$accountID.";";
 		$result = @mysql_query( $query, $connections[ 'cruc' ] );
 
 		$characterInfo = array(
@@ -80,8 +80,8 @@
 		{
 			$belongsTo = false;
 		}else{
-			$query = "SELECT accountID FROM character_ WHERE characterID=".$_GET[ 'c' ].";";
-			$result = @mysql_query( $query, $connections[ 'game' ] );
+			$query = "SELECT accountID FROM chrCharacters WHERE characterID=".$_GET[ 'c' ].";";
+			$result = @mysql_query( $query, $connections[ 'cruc' ] );
 
 			$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
 
