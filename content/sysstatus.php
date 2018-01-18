@@ -35,7 +35,7 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
 $systems=0;
 $players=0;
 
-    $query="SELECT count(Online) AS online FROM character_ WHERE Online = 1;";
+    $query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
     if( $result=mysql_query($query,$db) ) {
         $row=mysql_fetch_array($result);
         $players = $row['online'];

@@ -36,31 +36,21 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
 
     <?php
     /* AI 	characterID 	ownerID 	bounty 	timePlaced */
-    $query="SELECT
-	b.characterID,
-	c.name,
-	co.corporationName,
-	b.bounty,
-	b.timePlaced,
-	b.ownerID,
-	c2.name,
-	c.securityRating,
-	co.tickerName
-      FROM webBounties AS b
-      LEFT JOIN chrCharacters AS c USING (characterID)
+    $query="SELECT b.characterID,	c.name,	co.corporationName,	b.bounty,	b.timePlaced,	b.ownerID,	c2.name,
+    c.securityRating,	co.tickerName
+      FROM webBounties AS b  LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
-      LEFT JOIN corporation AS co USING (corporationID)
-      ORDER BY b.bounty DESC;";
+      LEFT JOIN corporation AS co USING (corporationID)  ORDER BY b.bounty DESC;";
     if($result=mysql_query($query,$db)) {
         while($row=mysql_fetch_array($result)) {
-	    printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));
-	    printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</a> (%.3f)</td>',$row[0],$row[1],$row[7]);
-	    printf('    <td align="center" class="content">&nbsp;%s&nbsp;(%s)</td>',$row[2],$row[8]);
-	    printf('    <td align="center" class="content">%s&nbsp;</td>',placed($row[4]));
-	    printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</td>',$row[5],$row[6]);
-	}
+            printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));
+            printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</a> (%.3f)</td>',$row[0],$row[1],$row[7]);
+            printf('    <td align="center" class="content">&nbsp;%s&nbsp;(%s)</td>',$row[2],$row[8]);
+            printf('    <td align="center" class="content">%s&nbsp;</td>',placed($row[4]));
+            printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</td>',$row[5],$row[6]);
+        }
     } else {
-	die("Player SQL error");
+        die("Player SQL error");
     }
 
 mysql_free_result($result);

@@ -34,13 +34,12 @@ Server Version: <strong><font color=orange>Crucible</font></strong><BR>
 	$err = 0; // We will use it later to see if the server was on or not
 
 	$status = @fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, ( float ) 0.5 );
+    echo 'Server status: ';
 	if( $status )
 	{
 		fclose( $status );
-		echo 'Server status: ';
 		echo '<strong><font color=green>Online</font></strong><br>';
 	}else{
-		echo 'Server status: ';
 		echo '<strong><font color=red>Offline</font></strong><br>';
 		$err = 1;
 	}

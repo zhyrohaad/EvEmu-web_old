@@ -81,7 +81,7 @@ if( $result=mysql_query($aquery,$db) ) {
 }
 
 // get count of total characters
-$cquery="SELECT count(characterID) AS chars FROM chrCharacter;";
+$cquery="SELECT count(characterID) AS chars FROM chrCharacters;";
 if( $result=mysql_query($cquery,$db) ) {
 	$row=mysql_fetch_array($result);
 	$chars = $row['chars'];
@@ -92,7 +92,7 @@ if( $result=mysql_query($cquery,$db) ) {
 // get count of active players
 if( $online ) {
 	global $players;
-	$query="SELECT count(Online) AS online FROM chrCharacter WHERE Online = 1;";
+	$query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
 	if( $result=mysql_query($query,$db) ) {
 		$row=mysql_fetch_array($result);
 		$players = $row['online'];
@@ -181,8 +181,8 @@ if( $players && $online ) {
         FROM chrCharacters AS c
             LEFT JOIN chrSchools AS s USING (schoolID)
             LEFT JOIN chrRaces AS r USING (raceID)
-            LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
-            LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
+            LEFT JOIN corporation AS co USING (corporationID)
+            LEFT JOIN mapRegions AS mr USING (regionID)
         WHERE online=1;";
 	if($result=mysql_query($query,$db)) {
 		while($row=mysql_fetch_array($result)) {

@@ -64,10 +64,10 @@
 	$cruc_port = 26000; // EVEmu Cruc Server Port
 	$test_server = "eve.alasiya.net"; // EVEmu Cruc Test Server
 	$test_port = 26010; // EVEmu Cruc Server Test Port
-        $apoc_server = "eve.alasiya.net"; // EVEmu Apoc Server
-        $apoc_port = 26005; // EVEmu Apoc Server Port
-        $inc_server = "eve.alasiya.net"; // EVEmu Inc Server
-        $inc_port = 26007; // EVEmu Inc Server Port
+    $apoc_server = "eve.alasiya.net"; // EVEmu Apoc Server
+    $apoc_port = 26005; // EVEmu Apoc Server Port
+    $inc_server = "eve.alasiya.net"; // EVEmu Inc Server
+    $inc_port = 26007; // EVEmu Inc Server Port
 
 	/* Portal config */
 	$portal_on = true; // Is the portal open ?
