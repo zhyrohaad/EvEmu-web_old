@@ -33,7 +33,7 @@ Server Version: <strong><font color=orange>Crucible</font></strong><BR>
 	// Open a socket and try to connect to the server
 	$err = 0; // We will use it later to see if the server was on or not
 
-	$status = @fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, ( float ) 0.5 );
+	$status = fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, 0.5 );
     echo 'Server status: ';
 	if( $status )
 	{

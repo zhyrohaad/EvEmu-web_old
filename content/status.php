@@ -27,6 +27,7 @@ foreach($database as $db_check) {
 $db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
 $online=0;
 $uptime="<font color=red>Offline</font>";
+$updated=0;
 $conns=0;
 $players=0;
 $accts=0;
@@ -42,7 +43,7 @@ $user=0.0;
 $kernel=0.0;
 
 //  is server online?
-$status = @fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, ( float ) 0.5 );
+$status = fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, 0.5 );
 if( $status )
 {
 	fclose( $status );
