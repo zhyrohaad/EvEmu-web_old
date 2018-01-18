@@ -39,7 +39,7 @@
 	$sql_crucible_user = "eve"; // MYSQL User for crucible DB
 	$sql_crucible_pass = "onlyme"; // MySQL Password for crucible DB
 	$sql_crucible_host = "localhost"; // MySQL Host for crucible DB
-	$sql_crucible_db = "EVE_Dev"; // Server crucible database name
+	$sql_crucible_db = "EVE_Crucible"; // Server crucible database name
 
 	/* MySQL connection settings */
 	$sql_apocrypha_user = "eve"; // MYSQL User for apocrypha DB

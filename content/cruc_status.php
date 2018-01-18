@@ -18,7 +18,7 @@ $database = array(
 'host'=>'localhost',			// Your DNS hostname or IP address
 'user'=>'eve',				// MySQL User account with access to SELECT on your Eve database
 'password'=>'onlyme',			// MySQL Password
-'db'=>'EVE_Dev'		        // Name of your EVE Emulator database
+'db'=>'EVE_Crucible'		        // Name of your EVE Emulator database
 );
 foreach($database as $db_check) {
 	if( $db_check=="" ) die("CHANGE YOUR DB CONFIGS!");
@@ -83,7 +83,7 @@ if( $result=mysql_query($aquery,$db) ) {
 }
 
 // get count of total characters
-$cquery="SELECT count(characterID) AS chars FROM character_;";
+$cquery="SELECT count(characterID) AS chars FROM chrCharacters;";
 if( $result=mysql_query($cquery,$db) ) {
 	$row=mysql_fetch_array($result);
 	$chars = $row['chars'];
@@ -94,7 +94,7 @@ if( $result=mysql_query($cquery,$db) ) {
 // get count of active players
 if( $online ) {
 	global $players;
-	$query="SELECT count(Online) AS online FROM character_ WHERE Online = 1;";
+	$query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
 	if( $result=mysql_query($query,$db) ) {
 		$row=mysql_fetch_array($result);
 		$players = $row['online'];
@@ -154,20 +154,19 @@ if( $players && $online ) {
 		<td align="right" width="15%" class="content"><strong>Location</strong>&nbsp;</td></tr>');
 	$query="SELECT
 			c.characterID,
-			e.itemName,
+			c.name,
 			r.raceName,
 			c.securityRating,
 			c.skillPoints,
 			co.corporationName,
 			co.tickerName,
 			mr.regionName
-		FROM character_ AS c
-			LEFT JOIN entity AS e ON e.itemID = c.characterID
-			LEFT JOIN chrSchools AS s ON s.schoolID = c.schoolID
-			LEFT JOIN chrRaces AS r ON r.raceID = s.raceID
+		FROM chrCharacters AS c
+			LEFT JOIN chrSchools AS s USING (schoolID)
+			LEFT JOIN chrRaces AS r USING (raceID)
 			LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
 			LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
-		WHERE Online=1;";
+		WHERE online=1;";
 	if($result=mysql_query($query,$db)) {
 		while($row=mysql_fetch_array($result)) {
 			printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>',$row[0],$row[1]);

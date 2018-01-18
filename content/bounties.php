@@ -18,7 +18,7 @@ $database = array(
 'host'=>'localhost',
 'user'=>'eve',
 'password'=>'onlyme',
-'db'=>'EVE_Alpha'
+'db'=>'EVE_Crucible'
 );
 
 // Init the DB
@@ -38,18 +38,17 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
     /* AI 	characterID 	ownerID 	bounty 	timePlaced */
     $query="SELECT
 	b.characterID,
-	e.itemName,
+	c.name,
 	co.corporationName,
 	b.bounty,
 	b.timePlaced,
 	b.ownerID,
-	e2.itemName,
+	c2.name,
 	c.securityRating,
 	co.tickerName
       FROM webBounties AS b
-      LEFT JOIN entity AS e ON e.itemID = b.characterID
-      LEFT JOIN entity AS e2 ON e2.itemID = b.ownerID
-      LEFT JOIN character_ AS c USING (characterID)
+      LEFT JOIN chrCharacters AS c USING (characterID)
+      LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
       LEFT JOIN corporation AS co USING (corporationID)
       ORDER BY b.bounty DESC;";
     if($result=mysql_query($query,$db)) {

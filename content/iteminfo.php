@@ -28,7 +28,7 @@
 	{
 		if( item_exists( $_GET[ 'item' ] ) )
 		{
-			$query = "SELECT description, typeName, basePrice, raceID FROM invtypes WHERE typeID=".$_GET[ 'item' ].";";
+			$query = "SELECT description, typeName, basePrice, raceID FROM invTypes WHERE typeID=".$_GET[ 'item' ].";";
 			$result = @mysql_query( $query, $connections[ 'cruc' ] );
 
 			if($result) $row = mysql_fetch_array( $result, MYSQL_ASSOC );

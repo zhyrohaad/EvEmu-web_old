@@ -17,7 +17,7 @@ $database = array(
 'host'=>'localhost',			// Your DNS hostname or IP address
 'user'=>'eve',				// MySQL User account with access to SELECT on your Eve database
 'password'=>'onlyme',			// MySQL Password
-'db'=>'EVE_Dev'		        // Name of your EVE Emulator database
+'db'=>'EVE_Crucible'		        // Name of your EVE Emulator database
 );
 foreach($database as $db_check) {
 	if( $db_check=="" ) die("CHANGE YOUR DB CONFIGS!");
@@ -170,21 +170,20 @@ if( $online ) {
 // If there is at least 1 player, draw the Player Status stuff
 if( $players && $online ) {
 	$query="SELECT
-			c.characterID,
-			e.itemName,
-			r.raceName,
-			c.securityRating,
-			c.skillPoints,
-			co.corporationName,
-			co.tickerName,
-			mr.regionName
-		FROM chrCharacter AS c
-			LEFT JOIN entity AS e ON e.itemID = c.characterID
-			LEFT JOIN chrSchools AS s ON s.schoolID = c.schoolID
-			LEFT JOIN chrRaces AS r ON r.raceID = s.raceID
-			LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
-			LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
-		WHERE Online=1;";
+            c.characterID,
+            c.name,
+            r.raceName,
+            c.securityRating,
+            c.skillPoints,
+            co.corporationName,
+            co.tickerName,
+            mr.regionName
+        FROM chrCharacters AS c
+            LEFT JOIN chrSchools AS s USING (schoolID)
+            LEFT JOIN chrRaces AS r USING (raceID)
+            LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
+            LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
+        WHERE online=1;";
 	if($result=mysql_query($query,$db)) {
 		while($row=mysql_fetch_array($result)) {
 			printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>

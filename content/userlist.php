@@ -51,15 +51,15 @@
 	{
 		if( !( empty( $pInfo[ $pCount ][0] ) ) )
 		{
-			$query = "SELECT characterID, logonMinutes FROM character_ WHERE accountID=".$pInfo[ $pCount ][0];
+			$query = "SELECT characterID, logonMinutes FROM chrCharacters WHERE accountID=".$pInfo[ $pCount ][0];
 			$result = mysql_query( $query, $connections[ 'cruc' ] );
 
 			while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) )
 			{
-				$query = "SELECT itemName FROM entity WHERE itemID=".$row[ 'characterID' ];
+				$query = "SELECT name FROM chrCharacters WHERE characterID=".$row[ 'characterID' ];
 				$result_row = mysql_query( $query, $connections[ 'cruc' ] );
 				$rowRes = mysql_fetch_array( $result_row, MYSQL_ASSOC );
-				$pInfo[ $pCount ][ $pChr + 2 ] = $rowRes[ 'itemName' ];
+				$pInfo[ $pCount ][ $pChr + 2 ] = $rowRes[ 'name' ];
                 $pInfo[ $pCount ][ $pChr + 3 ] = "  ( ".GetTime( $row[ 'logonMinutes' ] )." )";
 				$pChr += 1;
 			}

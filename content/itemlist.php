@@ -43,7 +43,7 @@
 			echo '<div id="theader"><table><tr><th><center><font style="color: rgb( 255, 0, 0 );"><strong>Error</strong></font></th></tr><tr><td><center>The especified user doesnt exists</center></td></tr></table></div>';
 		}
 
-		$query = "SELECT characterID, itemName AS characterName FROM character_ LEFT JOIN entity ON characterID = itemID WHERE accountID=".$accountID." AND itemID >= 140000000;";
+		$query = "SELECT characterID, name AS characterName FROM chrCharacters WHERE accountID=".$accountID;
 		$result = @mysql_query( $query, $connections[ 'cruc' ] );
 
 		$characterInfo = array(
@@ -71,7 +71,7 @@
 			}
 			echo '</center>';
 		}else{
-			$query = "SELECT accountID FROM character_ WHERE characterID=".$_GET[ 'c' ].";";
+			$query = "SELECT accountID FROM chrCharacters WHERE characterID=".$_GET[ 'c' ].";";
 			$result = @mysql_query( $query, $connections[ 'cruc' ] );
 
 			$row = @mysql_fetch_array( $result, MYSQL_ASSOC );

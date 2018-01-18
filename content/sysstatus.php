@@ -27,7 +27,7 @@ $database = array(
 'host'=>'localhost',
 'user'=>'eve',
 'password'=>'onlyme',
-'db'=>'EVE_Alpha'
+'db'=>'EVE_Crucible'
 );
 
 // Init the database connection and other vars
@@ -67,19 +67,19 @@ printf('<TR><TD colspan="10">&nbsp;</tr></td>');
         <td align="center" class="content"><strong>Pod Kills Last 24 Hours</strong>&nbsp;</td>
         <td align="center" class="content"><strong>FactionKills</strong>&nbsp;</td></tr>');
     $query2="SELECT
-            mss.solarSystemName,
-            mdd.pilotsDocked,
-            mdd.pilotsInSpace,
-            mdd.jumpsHour,
-            mdd.moduleCnt,
-            mdd.structureCnt,
-            mdd.killsHour,
-            mdd.podKillsHour,
-            mdd.kills24Hour,
-            mdd.podKills24Hour,
-            mdd.factionKills
-                FROM mapDynamicData AS mdd
-                    LEFT JOIN mapSolarSystems AS mss USING (solarSystemID);";
+              mss.solarSystemName,
+              mdd.pilotsDocked,
+              mdd.pilotsInSpace,
+              mdd.jumpsHour,
+              mdd.moduleCnt,
+              mdd.structureCnt,
+              mdd.killsHour,
+              mdd.podKillsHour,
+              mdd.kills24Hour,
+              mdd.podKills24Hour,
+              mdd.factionKills
+            FROM mapDynamicData AS mdd
+            LEFT JOIN mapSolarSystems AS mss USING (solarSystemID);";
     if($result=mysql_query($query2,$db)) {
         while($row=mysql_fetch_array($result)) {
             printf('<tr><td class="content">%s</td>',$row[0]);

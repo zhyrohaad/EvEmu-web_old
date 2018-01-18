@@ -18,7 +18,7 @@ $database = array(
 'host'=>'localhost',			// Your DNS hostname or IP address
 'user'=>'eve',				// MySQL User account with access to SELECT on your Eve database
 'password'=>'onlyme',			// MySQL Password
-'db'=>'EVE_Dev'			// Name of your EVE Emulator database
+'db'=>'EVE_Crucible'			// Name of your EVE Emulator database
 );
 foreach($database as $db_check) {
 	if( $db_check=="" ) die("CHANGE YOUR DB CONFIGS!");
