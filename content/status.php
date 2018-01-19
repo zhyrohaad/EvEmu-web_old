@@ -181,8 +181,8 @@ if( $players && $online ) {
             mr.regionName
         FROM chrCharacters AS c
             LEFT JOIN chrSchools AS s USING (schoolID)
-            LEFT JOIN chrRaces AS r USING (raceID)
-            LEFT JOIN corporation AS co USING (corporationID)
+            LEFT JOIN chrRaces AS r ON r.raceID = c.raceID
+            LEFT JOIN crpCorporation AS co ON co.corporationID = c.corporationID
             LEFT JOIN mapRegions AS mr USING (regionID)
         WHERE online=1;";
 	if($result=mysql_query($query,$db)) {
