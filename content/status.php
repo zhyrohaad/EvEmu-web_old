@@ -36,11 +36,20 @@ $threads=0;
 $items=0;
 $systems=0;
 $bubbles=0;
-$npcs = 0;
+$npcs=0;
 $rss=0.0;
 $vm=0.0;
 $user=0.0;
 $kernel=0.0;
+$pcShots=0;
+$pcMissiles=0;
+$ramJobs=0;
+$shipsSalvaged=0;
+$pcBounties=0.0;
+$npcBounties=0.0;
+$oreMined=0.0;
+$iskMarket=0.0;
+$timeStamp=0;
 
 //  is server online?
 $status = fsockopen( $cruc_server, $cruc_port, $ERROR_NO, $ERROR_STR, 0.5 );
@@ -105,55 +114,100 @@ if( $online ) {
 	$query2="SELECT threads, items, systems, bubbles, npcs, rss, vm, user, kernel, updateTime FROM srvStatus WHERE AI = 1;";
 	if( $result=mysql_query($query2,$db) ) {
 		$row=mysql_fetch_array($result);
-		$threads = $row[0];
-		$items = $row[1];
-		$systems = $row[2];
-		$bubbles = $row[3];
-		$npcs = $row[4];
-		$rss = number_format($row[5],3);
-		$vm = number_format($row[6],3);
-		$user = number_format($row[7],2);
-		$kernel = number_format($row[8],2);
-		$updated = updated($row[9]);
+		$threads    = $row[0];
+		$items      = $row[1];
+		$systems    = $row[2];
+		$bubbles    = $row[3];
+		$npcs       = $row[4];
+		$rss        = number_format($row[5],3);
+		$vm         = number_format($row[6],3);
+		$user       = number_format($row[7],2);
+		$kernel     = number_format($row[8],2);
+		$updated    = updated($row[9]);
 	} else {
 		die("Server Stats error");
 	}
+
+	global $pcShots, $pcMissiles, $ramJobs, $shipsSalvaged, $pcBounties, $npcBounties, $oreMined, $iskMarket;
+    $query3="SELECT timeStamp, pcShots, pcMissiles, ramJobs, shipsSalvaged, pcBounties, npcBounties, oreMined, iskMarket FROM srvStatisticHistory;";
+    if( $result=mysql_query($query3,$db) ) {
+        $row=mysql_fetch_array($result);
+        $timeStamp      = updated($row[0]);
+        $pcShots        = $row[1];
+        $pcMissiles     = $row[2];
+        $ramJobs        = $row[3];
+        $shipsSalvaged  = $row[4];
+        $pcBounties     = number_format($row[5],2);
+        $npcBounties    = number_format($row[6],2);
+        $oreMined       = number_format($row[7],2);
+        $iskMarket      = number_format($row[8],2);
+    } else {
+        die("Server Stats2 error");
+    }
 }
 ?>
 <tr><td colspan="4" align="center" class="content"><font color=orange><strong><h2>Alasiya EvE Status</h2></strong></font></td></tr>
 <tr><td colspan="4" align="center" class="content"><?php echo $uptime ?></td></tr>
 <tr><td colspan="4" align="center" class="content"><font color=yellow size=2>Updated <?php echo $updated ?>ago.</font></td></tr>
-<tr><td colspan="2" align="right" class="content"><strong>Accounts:</strong></td>
+<tr><td colspan="1" align="right" class="content"><strong>Accounts:</strong></td>
     <td colspan="1" align="left" class="content"> <?php echo $accts ?></td>
-    <td colspan="2" align="right" class="content"><strong>PCs:</strong></td>
+    <td colspan="1" align="right" class="content"><strong>PCs:</strong></td>
     <td colspan="1" align="left" class="content"> <?php echo $chars ?></td></tr>
 <?php
 // If server is online, draw the Server Status stuff
 if( $online ) {
 	printf('
-	<tr><td colspan="2" align="right" class="content"><strong>Players Online:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Connections:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Threads:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Items:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Systems:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Bubbles:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>NPCs:</strong></td>
-	    <td colspan="1" align="left" class="content"> %s</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Memory:</strong></td>
-	    <td colspan="1" align="left" class="content"> %sMB</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>VM:</strong></td>
-	    <td colspan="1" align="left" class="content"> %sMB</td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>User Time:</strong></td>
+	<tr><td colspan="1" align="right" class="content"><strong>Players Online:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td>
+        <td colspan="1" align="right" class="content"><strong>Stats Updated:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Connections:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td>
+        <td colspan="1" align="right" class="content"><strong>Player Shots:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Threads:</strong></td>
+	    <td colspan="1" align="left" class="content"> %s</td>
+	    <td colspan="1" align="right" class="content"><strong>Player Missiles:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Items:</strong></td>
+	    <td colspan="1" align="left" class="content"> %s</td>
+	    <td colspan="1" align="right" class="content"><strong>NPC Bounties Paid:</strong></td>
+        <td colspan="1" align="left" class="content"> %s ISK</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Systems:</strong></td>
+	    <td colspan="1" align="left" class="content"> %s</td>
+	    <td colspan="1" align="right" class="content"><strong>PC Bounties Paid:</strong></td>
+        <td colspan="1" align="left" class="content"> %s ISK</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Bubbles:</strong></td>
+	    <td colspan="1" align="left" class="content"> %s</td>
+	    <td colspan="1" align="right" class="content"><strong>Ore Mined:</strong></td>
+        <td colspan="1" align="left" class="content"> %s M3</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>NPCs:</strong></td>
+	    <td colspan="1" align="left" class="content"> %s</td>
+	    <td colspan="1" align="right" class="content"><strong>ISK Spent in Market:</strong></td>
+        <td colspan="1" align="left" class="content"> %s ISK</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>Memory:</strong></td>
+	    <td colspan="1" align="left" class="content"> %sMB</td>
+	    <td colspan="1" align="right" class="content"><strong>Indy Jobs Started:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>VM:</strong></td>
+	    <td colspan="1" align="left" class="content"> %sMB</td>
+	    <td colspan="1" align="right" class="content"><strong>Wrecks Salvaged:</strong></td>
+        <td colspan="1" align="left" class="content"> %s</td></tr>
+	<tr><td colspan="1" align="right" class="content"><strong>User Time:</strong></td>
 	    <td colspan="1" align="left" class="content"> %s&#37; </td></tr>
-	<tr><td colspan="2" align="right" class="content"><strong>Kernel Time:</strong></td>
+	<tr><td colspan="1" align="right" class="content"><strong>Kernel Time:</strong></td>
 	    <td colspan="1" align="left" class="content"> %s&#37; </td></tr>',
-	$players,$conns,$threads,$items,$systems,$bubbles,$npcs,$rss,$vm,$user,$kernel);
+	$players,$timeStamp,
+	$conns,$pcShots,
+	$threads,$pcMissiles,
+	$items,$npcBounties,
+	$systems,$pcBounties,
+	$bubbles,$oreMined,
+	$npcs,$iskMarket,
+	$rss,$ramJobs,
+	$vm,$shipsSalvaged,
+	$user,
+	$kernel);
 }
 
 printf('<tr><td colspan="6">&nbsp;</td></tr>');

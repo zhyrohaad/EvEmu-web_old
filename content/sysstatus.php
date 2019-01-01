@@ -42,7 +42,7 @@ $players=0;
     } else {
         die("OnlinePlayers SQL error");
     }
-    $squery="SELECT count(solarSystemID) AS systems FROM mapDynamicData;";
+    $squery="SELECT count(solarSystemID) AS systems FROM mapDynamicData WHERE active = 1;";
     if( $result=mysql_query($squery,$db) ) {
         $row=mysql_fetch_array($result);
         $systems = $row['systems'];
@@ -79,7 +79,8 @@ printf('<TR><TD colspan="10">&nbsp;</tr></td>');
               mdd.podKills24Hour,
               mdd.factionKills
             FROM mapDynamicData AS mdd
-            LEFT JOIN mapSolarSystems AS mss USING (solarSystemID);";
+            LEFT JOIN mapSolarSystems AS mss USING (solarSystemID)
+            WHERE mdd.active = 1;";
     if($result=mysql_query($query2,$db)) {
         while($row=mysql_fetch_array($result)) {
             printf('<tr><td class="content">%s</td>',$row[0]);
