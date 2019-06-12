@@ -50,22 +50,24 @@ $players=0;
         die("SystemCount SQL error");
     }
 ?>
-<tr><td colspan="10" align="center" class="content"><h1><font color=blue>Solar System Status'</font></h1></td></tr>
+<tr><td colspan="11" align="center" class="content"><h1><font color=blue>Active Solar Systems</font></h1></td></tr>
 <?php
-printf('<tr><td colspan="10" align="center" class="content">%s Players Online in %s Active Systems</td>',$players, $systems);
-printf('<TR><TD colspan="10">&nbsp;</tr></td>');
-printf('<tr><td colspan="10" align="center">Active System Information</td></tr>');
-printf('<TR><TD colspan="10">&nbsp;</tr></td>');
-    print('<tr><td align="left" width="20%" class="content">&nbsp;<strong>System</strong></td>
-        <td align="center" class="content">&nbsp;<strong>Pilots Docked/InSpace</strong></td>
-        <td align="center" class="content">&nbsp;<strong>Jumps/Hour</strong></td>
+printf('<tr><td colspan="11" align="center" class="content">%s Players Online in %s Active Systems</td>',$players, $systems);
+printf('<TR><TD colspan="11">&nbsp;</tr></td>');
+printf('<TR><TD colspan="11" align="center">System data updated every 15 minutes.</tr></td>');
+printf('<TR><TD colspan="11">&nbsp;</tr></td>');
+printf('<TR><TD colspan="11">&nbsp;</tr></td>');
+    print('<tr><td align="center" width="15%" class="content">&nbsp;<strong>System</strong></td>
+        <td align="center" class="content">&nbsp;<strong>Pilots Docked</strong></td>
+        <td align="center" class="content">&nbsp;<strong>Pilots InSpace</strong></td>
+        <td align="center" class="content">&nbsp;<strong>Jumps Hour</strong></td>
         <td align="center" class="content"><strong>Beacons</strong>&nbsp;</td>
         <td align="center" class="content"><strong>Cyno Fields</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>Kills/Hour</strong>&nbsp;</td>
-        <td align="center" class="content">&nbsp;<strong>PodKills/Hour</strong></td>
+        <td align="center" class="content"><strong>Kills Hour</strong>&nbsp;</td>
+        <td align="center" class="content">&nbsp;<strong>PodKills Hour</strong></td>
         <td align="center" class="content"><strong>Kills Last 24 Hours</strong>&nbsp;</td>
         <td align="center" class="content"><strong>Pod Kills Last 24 Hours</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>FactionKills</strong>&nbsp;</td></tr>');
+        <td align="center" class="content"><strong>Faction Kills</strong>&nbsp;</td></tr>');
     $query2="SELECT
               mss.solarSystemName,
               mdd.pilotsDocked,
@@ -83,27 +85,23 @@ printf('<TR><TD colspan="10">&nbsp;</tr></td>');
             WHERE mdd.active = 1;";
     if($result=mysql_query($query2,$db)) {
         while($row=mysql_fetch_array($result)) {
-            printf('<tr><td class="content">%s</td>',$row[0]);
-            printf('<td class="content">&nbsp;%s / %s</td>',$row[1],$row[2]);
-            printf('<td class="content">&nbsp;%s</td>',$row[3]);
-            printf('<td class="content">&nbsp;%s</td>',$row[4]);
-            printf('<td class="content">&nbsp;%s</td>',$row[5]);
-            printf('<td class="content">&nbsp;%s</td>',$row[6]);
-            printf('<td class="content">&nbsp;%s</td>',$row[7]);
-            printf('<td class="content">&nbsp;%s</td>',$row[8]);
-            printf('<td class="content">&nbsp;%s</td>',$row[9]);
-            printf('<td class="content">&nbsp;%s</td>',$row[10]);
+            printf('<tr><td align="center" class="content">%s</td>',$row[0]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[1]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[2]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[3]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[4]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[5]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[6]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[7]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[8]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[9]);
+            printf('<td align="center" class="content">&nbsp;%s</td>',$row[10]);
         }
     } else {
         die("System SQL error");
     }
 ?>
-<TR><TD colspan="10">&nbsp;</tr></td>
-<TR><TD colspan="10">&nbsp;</tr></td>
-<tr><td colspan="10" class="error">Please Note...Pilots and Jumps ARE updated dynamically by the server, but RIGHT NOW, it is NOT
-deleted on server restarts, so will not be accurate.  Other System information is hard-coded in DB right now for testing.  This page is a DB/Server test, to make sure all relevant information is stored and retrieved correctly, but will give a general idea of active systems.<BR><BR>
-Systems Listed here ARE created by the server when a player enters that system, so no unused system will be displayed.<BR>
-That means there has been a player in the listed systems at one point, but may not be now, so the pilot count will be wrong.</tr></td>
+<TR><TD colspan="11">&nbsp;</tr></td>
 </table>
 
 <?php
