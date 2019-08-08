@@ -230,13 +230,12 @@ if( $online ) {
 // If there is at least 1 player, draw the Player Status stuff
 if( $players && $online ) {
 	$query="SELECT
-            c.characterID,
             c.name,
             r.raceName,
-            c.securityRating,
-            c.skillPoints,
             co.corporationName,
             co.tickerName,
+            c.skillPoints,
+            c.securityRating,
             mr.regionName
         FROM chrCharacters AS c
             LEFT JOIN chrSchools AS s USING (schoolID)
@@ -246,14 +245,13 @@ if( $players && $online ) {
         WHERE online=1;";
 	if($result=mysql_query($query,$db)) {
 		while($row=mysql_fetch_array($result)) {
-			printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>
-				<td class="content">&nbsp;%s</td>
+		//<a href="?p=characterinfo&c=%u">
+			printf('<tr><td class="content">&nbsp;%s</td>
 				<td align="center" class="content">&nbsp;%s&nbsp;(%s)</td>
 				<td align="right" class="content">%s&nbsp;</td>
 				<td align="right" class="content">%s&nbsp;</td>
 				<td align="center" class="content">&nbsp;%s</td></tr>',
-				$row[0],$row[1],$row[2],$row[5],$row[6],number_format($row[4],1),
-				number_format($row[3],2),$row[7]);
+				$row[0],$row[1],$row[2],$row[3],$row[4],number_format($row[5],1),$row[6]);
 		}
 	} else {
 		die("Player SQL error");

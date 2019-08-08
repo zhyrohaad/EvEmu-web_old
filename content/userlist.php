@@ -74,14 +74,14 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 		$pCount += 1;
 	}
 
-	$pMax = $pCount +1;
+	$pMax = $pCount;
 	$pCount = 0;
 
 	while ( $pCount < $pMax )
 	{
 		//echo '<tr><td class="content"><center><a href="?p=characterinfo&c='.$pInfo[$pCount][0].'">'.$pInfo[ $pCount ][1].'</a></center></td>';
 		echo '<tr><td class="content"><center>'.$pInfo[ $pCount ][1].'</center></td>';
-        echo '<td class="content"><center>'.$pInfo[$pCount][2].'</center></td><td class="content"><center>'.$pInfo[$pCount][3].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][2].'</center></td><td class="content"><center>'.number_format($pInfo[$pCount][3],3).'</center></td>';
         echo '<td class="content"><center>'.$pInfo[$pCount][4].'&nbsp;('.$pInfo[$pCount][5].')</center></td>';
         echo '<td class="content"><center>'.$pInfo[$pCount][6].'</center></td><td class="content"><center>'.$pInfo[$pCount][7].'</center></td>';
         echo '<td class="content"><center>'.$pInfo[$pCount][8].'</center></td><td class="content"><center>'.$pInfo[$pCount][9].'</center></td>';
@@ -90,10 +90,12 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 	}
 ?>
 </table><BR>
+<!--
 <font color=purple>Owner</font>&nbsp;&nbsp;|&nbsp;&nbsp;
 <font color=teal>Administrator</font>&nbsp;&nbsp;|&nbsp;&nbsp;
 <font color=green>Development</font>&nbsp;&nbsp;|&nbsp;&nbsp;
 <font color=yellow>Game Master</font>&nbsp;&nbsp;|&nbsp;&nbsp;
 <font color=#44e>Tester</font>&nbsp;&nbsp;|&nbsp;&nbsp;
 <font color=white>Player</font>
+// -->
 </div>
