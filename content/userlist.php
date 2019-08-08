@@ -29,12 +29,12 @@
 <tr><td>&nbsp;</td></tr>
 <tr><td class="content"><center><strong>Name</strong></center></td>
 <td class="content"><center><strong>Race</strong></center></td>
+<td class="content"><center><strong>Gender</strong></center></td>
 <td class="content"><center><strong>Security Rating</strong></center></td>
 <td class="content"><center><strong>Corp (Ticker)</strong></center></td>
 <td class="content"><center><strong>Login Time</strong></center></td>
 <td class="content"><center><strong>Skill Points</strong></center></td>
 <td class="content"><center><strong>Home Station</strong></center></td>
-<td class="content"><center><strong>Gender</strong></center></td>
 <td class="content"><center><strong>Current System</strong></center></td>
 <td class="content"><center><strong>Current Ship</strong></center></td>
 <td class="content"><center><strong></strong></center></td></tr>
@@ -77,15 +77,14 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 	$pMax = $pCount;
 	$pCount = 0;
 
-	// created .placed(). 
+	// created .placed().
 	while ( $pCount < $pMax )
 	{
-		//echo '<tr><td class="content"><center><a href="?p=characterinfo&c='.$pInfo[$pCount][0].'">'.$pInfo[ $pCount ][1].'</a></center></td>';
-		echo '<tr><td class="content"><center>'.$pInfo[ $pCount ][1].'</center></td>';
-        echo '<td class="content"><center>'.$pInfo[$pCount][2].'</center></td><td class="content"><center>'.number_format($pInfo[$pCount][3],3).'</center></td>';
-        echo '<td class="content"><center>'.$pInfo[$pCount][4].'&nbsp;('.$pInfo[$pCount][5].')</center></td>';
+		echo '<tr><td class="content"><center><a href="?p=characterinfo&c='.$pInfo[$pCount][0].'">'.$pInfo[ $pCount ][1].'</a></center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][2].'</center></td><td class="content"><center>'.$pInfo[$pCount][9].'</center></td>';
+        echo '<td class="content"><center>'.number_format($pInfo[$pCount][3],3).'</center></td><td class="content"><center>'.$pInfo[$pCount][4].'&nbsp;('.$pInfo[$pCount][5].')</center></td>';
         echo '<td class="content"><center>'.$pInfo[$pCount][6].'</center></td><td class="content"><center>'.$pInfo[$pCount][7].'</center></td>';
-        echo '<td class="content"><center>'.$pInfo[$pCount][8].'</center></td><td class="content"><center>'.$pInfo[$pCount][9].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][8].'</center></td>';
         echo '<td class="content"><center>'.$pInfo[$pCount][10].'</center></td><td class="content"><center>'.$pInfo[$pCount][11].'</center></td></tr>';
 		$pCount += 1;
 	}
