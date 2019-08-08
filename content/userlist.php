@@ -22,79 +22,70 @@
         http://www.gnu.org/copyleft/lesser.txt.
         ------------------------------------------------------------------------------------
         Author:         Almamu
+        Updates:    Allan
 */
-?><tr><td class="content" align="center" colspan="5">
+?><tr><td class="content" align="center" colspan="10">
 <h2><font color=blue>Crucible Server Players</font></h2></td></tr>
-<tr><td class="content"><center><strong>Player ID</strong></center></td>
-<td class="content"><center><strong>Account Name</strong></center></td>
-<td class="content"><center><strong>Character 1 (Login Time)</strong></center></td>
-<td class="content"><center><strong>Character 2 (Login Time)</strong></center></td>
-<td class="content"><center><strong>Character 3 (Login Time)</strong></center></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td class="content"><center><strong>Character</strong></center></td>
+<td class="content"><center><strong>Race</strong></center></td>
+<td class="content"><center><strong>Security Rating</strong></center></td>
+<td class="content"><center><strong>Corp (Ticker)</strong></center></td>
+<td class="content"><center><strong>Login Time</strong></center></td>
+<td class="content"><center><strong>Skill Points</strong></center></td>
+<td class="content"><center><strong>Home Station</strong></center></td>
+<td class="content"><center><strong>Gender</strong></center></td>
+<td class="content"><center><strong>Current System</strong></center></td>
+<td class="content"><center><strong>Current Ship</strong></center></td>
+<td class="content"><center><strong></strong></center></td></tr>
 <?php
 	$pInfo = array( array() );
 
-	$query = "SELECT accountID, accountName FROM account ORDER BY accountID";
+	$query = "
+SELECT c.characterID,c.name,cr.raceName,c.securityRating,co.corporationName,co.tickerName,c.logonMinutes,
+c.skillPoints,stb.stationName,c.gender,ss.solarSystemName, it.typeName
+FROM chrCharacters AS c
+LEFT JOIN chrRaces AS cr USING (raceID)
+LEFT JOIN crpCorporation AS co USING (corporationID)
+LEFT JOIN staStations AS stb ON (stb.stationID = c.baseID)
+LEFT JOIN mapSolarSystems AS ss ON (ss.solarSystemID = c.solarSystemID)
+LEFT JOIN entity AS e ON (e.itemID = c.shipID)
+LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 	$result = mysql_query( $query, $connections[ 'cruc' ] );
-	$pCount = 1;
-	$pMax = 0;
+	$pCount = 0;
 
-	while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) )
+	while ( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) )
 	{
-		$pInfo[ $pCount ][0] = $row[ 'accountID' ];
-		$pInfo[ $pCount ][1] = $row[ 'accountName' ];
+		$pInfo[ $pCount ][0] = $row[ 'characterID' ];
+		$pInfo[ $pCount ][1] = $row[ 'name' ];
+        $pInfo[ $pCount ][2] = $row[ 'raceName' ];
+        $pInfo[ $pCount ][3] = $row[ 'securityRating' ];
+        $pInfo[ $pCount ][4] = $row[ 'corporationName' ];
+        $pInfo[ $pCount ][5] = $row[ 'tickerName' ];
+        $pInfo[ $pCount ][6] = $row[ 'logonMinutes' ];
+        $pInfo[ $pCount ][7] = $row[ 'skillPoints' ];
+        $pInfo[ $pCount ][8] = $row[ 'stationName' ];
+        if ($row[ 'gender' ])
+            $pInfo[ $pCount ][9] = "Male";
+        else
+            $pInfo[ $pCount ][9] = "Female";
+        $pInfo[ $pCount ][10] = $row[ 'solarSystemName' ];
+        $pInfo[ $pCount ][11] = $row[ 'typeName' ];
 		$pCount += 1;
 	}
 
-	$pMax = $pCount;
-	$pCount = 1;
-	$pChr = 0;
+	$pMax = $pCount +1;
+	$pCount = 0;
 
-	while( $pCount <= $pMax )
+	while ( $pCount < $pMax )
 	{
-		if( !( empty( $pInfo[ $pCount ][0] ) ) )
-		{
-			$query = "SELECT characterID, logonMinutes FROM chrCharacters WHERE accountID=".$pInfo[ $pCount ][0];
-			$result = mysql_query( $query, $connections[ 'cruc' ] );
-
-			while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) )
-			{
-				$query = "SELECT name FROM chrCharacters WHERE characterID=".$row[ 'characterID' ];
-				$result_row = mysql_query( $query, $connections[ 'cruc' ] );
-				$rowRes = mysql_fetch_array( $result_row, MYSQL_ASSOC );
-				$pInfo[ $pCount ][ $pChr + 2 ] = $rowRes[ 'name' ];
-                $pInfo[ $pCount ][ $pChr + 3 ] = "  ( ".GetTime( $row[ 'logonMinutes' ] )." )";
-				$pChr += 1;
-			}
-		}
-
-		$pChr = 0;
-		$pCount += 1;
-	}
-
-	$pCount = 1;
-
-	while( $pCount < $pMax )
-	{
-		echo '<tr><td class="content"><center>'.$pInfo[$pCount][0].'</center></td><td class="content"><center>'.$pInfo[$pCount][1].'</center></td><td class="content"><center>';
-		if( isset( $pInfo[ $pCount ][2] ) )
-		{
-			echo '<a href="?p=characterinfo&c='.get_character_id( $pInfo[ $pCount ][2] ).'">'.$pInfo[ $pCount ][2].'</a>  '.$pInfo[ $pCount ][3].'</center></td><td class="content"><center>';
-		}else{
-			echo '<font color=red>None</font></center></td><td class="content"><center>';
-		}
-        if( isset( $pInfo[ $pCount ][4] ) )
-        {
-            echo '<a href="?p=characterinfo&c='.get_character_id( $pInfo[ $pCount ][4] ).'">'.$pInfo[ $pCount ][4].'</a></center></td><td class="content"><center>';
-        }else{
-            echo '<font color=red>None</center></td><td class="content"><center>';
-        }
-        if( isset( $pInfo[ $pCount ][6] ) )
-        {
-            echo '<a href="?p=characterinfo&c='.get_character_id( $pInfo[ $pCount ][6] ).'">'.$pInfo[ $pCount ][6].'</a></center></td><td class="content"><center>';
-        }else{
-            echo '<font color=red>None</center></td></tr>';
-        }
-
+		//echo '<tr><td class="content"><center><a href="?p=characterinfo&c='.$pInfo[$pCount][0].'">'.$pInfo[ $pCount ][1].'</a></center></td>';
+		echo '<tr><td class="content"><center>'.$pInfo[ $pCount ][1].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][2].'</center></td><td class="content"><center>'.$pInfo[$pCount][3].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][4].'&nbsp;('.$pInfo[$pCount][5].')</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][6].'</center></td><td class="content"><center>'.$pInfo[$pCount][7].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][8].'</center></td><td class="content"><center>'.$pInfo[$pCount][9].'</center></td>';
+        echo '<td class="content"><center>'.$pInfo[$pCount][10].'</center></td><td class="content"><center>'.$pInfo[$pCount][11].'</center></td></tr>';
 		$pCount += 1;
 	}
 ?>
