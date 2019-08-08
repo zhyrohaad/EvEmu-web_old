@@ -238,7 +238,6 @@ if( $players && $online ) {
             c.securityRating,
             mr.regionName
         FROM chrCharacters AS c
-            LEFT JOIN chrSchools AS s USING (schoolID)
             LEFT JOIN chrRaces AS r ON r.raceID = c.raceID
             LEFT JOIN crpCorporation AS co ON co.corporationID = c.corporationID
             LEFT JOIN mapRegions AS mr USING (regionID)

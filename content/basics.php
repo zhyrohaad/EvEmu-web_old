@@ -48,15 +48,11 @@ Server Version: <strong><font color=orange>Crucible</font></strong><BR>
 		?>
 		Users online:<strong>
 		<?php
-		$nUsersConnected = 0;
-		$query = "SELECT online FROM account WHERE online=1";
+		$query = "SELECT count(online) AS online FROM account WHERE online=1";
 		$result = mysql_query( $query, $connections[ 'cruc' ] );
-
-		while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) )
-		{
-			$nUsersConnected += 1;
-		}
-		echo $nUsersConnected.'</strong><br>';
+		$row = mysql_fetch_array( $result, MYSQL_ASSOC );
+		echo $row['online'].'</strong><br>';
+        mysql_free_result($result);
 	}
 	?>
 	IP: <strong>eve.alasiya.net</strong><BR>

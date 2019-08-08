@@ -71,6 +71,7 @@
 				include( 'content/admin/panel.php' );
 			}
 		}
+        mysql_free_result($result);
 	}
 
 ?>

@@ -61,6 +61,7 @@
 		echo '<td class="content"><center>'.$pInfo[ $pCount ][4].'</center></td></tr>';
 		$pCount ++;
 	}
+    mysql_free_result($result);
 ?>
 
 </table>

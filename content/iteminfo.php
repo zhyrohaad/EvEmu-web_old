@@ -43,6 +43,7 @@
 			else echo '<center>'.$row[ 'description' ].'</center>';
 			echo '</td></tr>';
 			echo '</table></div>';
+        mysql_free_result($result);
 		}else{
 			echo '<div id="theader"><table><tr><th><center><font style="color: rgb( 255, 0, 0 );"><strong>Error</strong></font></th></tr><tr><td><center>The item you\'re looking for doesn\'t exists</center></td></tr></table></div>';
 		}

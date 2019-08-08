@@ -35,10 +35,10 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
 <tr><td colspan="5">&nbsp;</td></tr>
 
     <?php
-    /* AI 	characterID 	ownerID 	bounty 	timePlaced */
-    $query="SELECT b.characterID,   c.name, co.corporationName, b.bounty,   b.timePlaced,   b.ownerID,  c2.name,
-    c.securityRating,   co.tickerName
-      FROM webBounties AS b  LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
+    /* 	characterID 	ownerID 	bounty 	timePlaced */
+    $query="SELECT b.characterID, c.name, co.corporationName, b.bounty, b.timePlaced, b.ownerID, c2.name, c.securityRating, co.tickerName
+      FROM webBounties AS b
+      LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
       LEFT JOIN crpCorporation AS co ON c.corporationID = co.corporationID  ORDER BY b.bounty DESC;";
     if($result=mysql_query($query,$db)) {

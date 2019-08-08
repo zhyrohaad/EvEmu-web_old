@@ -27,7 +27,7 @@
 ?><tr><td class="content" align="center" colspan="10">
 <h2><font color=blue>Crucible Server Players</font></h2></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td class="content"><center><strong>Character</strong></center></td>
+<tr><td class="content"><center><strong>Name</strong></center></td>
 <td class="content"><center><strong>Race</strong></center></td>
 <td class="content"><center><strong>Security Rating</strong></center></td>
 <td class="content"><center><strong>Corp (Ticker)</strong></center></td>
@@ -77,6 +77,7 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 	$pMax = $pCount;
 	$pCount = 0;
 
+	// created .placed(). 
 	while ( $pCount < $pMax )
 	{
 		//echo '<tr><td class="content"><center><a href="?p=characterinfo&c='.$pInfo[$pCount][0].'">'.$pInfo[ $pCount ][1].'</a></center></td>';
@@ -88,6 +89,7 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
         echo '<td class="content"><center>'.$pInfo[$pCount][10].'</center></td><td class="content"><center>'.$pInfo[$pCount][11].'</center></td></tr>';
 		$pCount += 1;
 	}
+mysql_free_result($result);
 ?>
 </table><BR>
 <!--

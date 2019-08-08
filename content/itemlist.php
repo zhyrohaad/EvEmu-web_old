@@ -104,6 +104,7 @@
 				echo '</td></tr>';
 			}
 
+        mysql_free_result($result);
 ?>
 </table>
 </div>

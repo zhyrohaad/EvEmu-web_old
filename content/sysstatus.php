@@ -57,29 +57,29 @@ printf('<TR><TD colspan="11">&nbsp;</tr></td>');
 printf('<TR><TD colspan="11" align="center">System data updated every 15 minutes.</tr></td>');
 printf('<TR><TD colspan="11">&nbsp;</tr></td>');
 printf('<TR><TD colspan="11">&nbsp;</tr></td>');
-    print('<tr><td align="center" width="15%" class="content">&nbsp;<strong>System</strong></td>
-        <td align="center" class="content">&nbsp;<strong>Pilots Docked</strong></td>
-        <td align="center" class="content">&nbsp;<strong>Pilots InSpace</strong></td>
-        <td align="center" class="content">&nbsp;<strong>Jumps Hour</strong></td>
-        <td align="center" class="content"><strong>Beacons</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>Cyno Fields</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>Kills Hour</strong>&nbsp;</td>
-        <td align="center" class="content">&nbsp;<strong>PodKills Hour</strong></td>
-        <td align="center" class="content"><strong>Kills Last 24 Hours</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>Pod Kills Last 24 Hours</strong>&nbsp;</td>
-        <td align="center" class="content"><strong>Faction Kills</strong>&nbsp;</td></tr>');
+    print('<tr><td align="center" width="15%" class="content"><strong>System</strong></td>
+        <td align="center" class="content"><strong>Docked</strong></td>
+        <td align="center" class="content"><strong>InSpace</strong></td>
+        <td align="center" class="content"><strong>Jumps</strong></td>
+        <td align="center" class="content"><strong>Kills</strong></td>
+        <td align="center" class="content"><strong>Faction Kills</strong></td>
+        <td align="center" class="content"><strong>PodKills</strong></td>
+        <td align="center" class="content"><strong>Kills 24h</strong></td>
+        <td align="center" class="content"><strong>PodKills 24h</strong></td>
+        <td align="center" class="content"><strong>Beacons</strong></td>
+        <td align="center" class="content"><strong>Cynos</strong></td></tr>');
     $query2="SELECT
               mss.solarSystemName,
               mdd.pilotsDocked,
               mdd.pilotsInSpace,
               mdd.jumpsHour,
-              mdd.moduleCnt,
-              mdd.structureCnt,
               mdd.killsHour,
+              mdd.factionKills,
               mdd.podKillsHour,
               mdd.kills24Hour,
               mdd.podKills24Hour,
-              mdd.factionKills
+              mdd.moduleCnt,
+              mdd.structureCnt
             FROM mapDynamicData AS mdd
             LEFT JOIN mapSolarSystems AS mss USING (solarSystemID)
             WHERE mdd.active = 1;";
@@ -100,12 +100,8 @@ printf('<TR><TD colspan="11">&nbsp;</tr></td>');
     } else {
         die("System SQL error");
     }
+mysql_free_result($result);
 ?>
 <TR><TD colspan="11">&nbsp;</tr></td>
 </table>
-
-<?php
-mysql_free_result($result);
-
-?>
 

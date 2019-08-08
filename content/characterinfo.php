@@ -163,6 +163,7 @@
 <?php
 			//}
 			$c->end();
+        mysql_free_result($result);
 		}
 	}
 ?>
