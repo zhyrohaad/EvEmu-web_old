@@ -13,19 +13,8 @@
  *  updated for DB mods		-allan	13Aug14
  ************************************/
 
-// You MUST set these up, or the script will die.
-$database = array(
-'host'=>'localhost',			// Your DNS hostname or IP address
-'user'=>'eve',				// MySQL User account with access to SELECT on your Eve database
-'password'=>'onlyme',			// MySQL Password
-'db'=>'EVE_Crucible'			// Name of your EVE Emulator database
-);
-foreach($database as $db_check) {
-	if( $db_check=="" ) die("CHANGE YOUR DB CONFIGS!");
-}
 
-// Init the database connection and other vars
-$db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
+// Init the vars
 $online=0;
 $uptime="Offline";
 $players=0;
@@ -34,7 +23,7 @@ $chars=0;
 
 // get current status
 $query="select startTime from srvStatus";
-if($result=mysql_query($query,$db)) {
+if($result=mysql_query($query,$connections[ 'cruc' ])) {
 	$row=mysql_fetch_array($result);
 	if( $row['startTime'] ) {
 		$online=1;
@@ -48,7 +37,7 @@ if($result=mysql_query($query,$db)) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysql_query($aquery,$db) ) {
+if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
 	$row=mysql_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
@@ -59,7 +48,7 @@ if( $result=mysql_query($aquery,$db) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(Online) AS online FROM chrCharacter WHERE Online = 1;";
-	if( $result=mysql_query($query,$db) ) {
+	if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
 		$row=mysql_fetch_array($result);
 		$players = $row['online'];
 	} else {
@@ -67,7 +56,7 @@ if( $online ) {
 	}
 	global $chars;
 	$cquery="SELECT count(characterID) AS chars FROM chrCharacter ;";
-	if( $result=mysql_query($cquery,$db) ) {
+	if( $result=mysql_query($cquery,$connections[ 'cruc' ]) ) {
 		$row=mysql_fetch_array($result);
 		$chars = $row['chars'];
 	} else {
@@ -110,7 +99,7 @@ if( $players && $online ) {
 					LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
 					LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
 				WHERE Online=1;";
-	if($result=mysql_query($query,$db)) {
+	if($result=mysql_query($query,$connections[ 'cruc' ])) {
 		while($row=mysql_fetch_array($result)) {
 			print('<tr>');
 			printf('<td>&nbsp;%s</td>',$row[0]);
