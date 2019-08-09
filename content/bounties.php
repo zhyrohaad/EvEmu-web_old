@@ -13,17 +13,6 @@
  *
  ************************************/
 
-
-$database = array(
-'host'=>'localhost',
-'user'=>'eve',
-'password'=>'onlyme',
-'db'=>'EVE_Crucible'
-);
-
-// Init the DB
-$db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
-
 ?>
 <tr><td colspan="5" align="center" class="content"><h1><font color=blue>Server Bounties</font></h1></td></tr>
 <tr><td colspan="5">&nbsp;</td></tr>
@@ -41,7 +30,7 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
       LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
       LEFT JOIN crpCorporation AS co ON c.corporationID = co.corporationID  ORDER BY b.bounty DESC;";
-    if($result=mysql_query($query,$db)) {
+    if($result=mysql_query($query,$connections[ 'cruc' ])) {
         while($row=mysql_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));
             printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</a> (%.3f)</td>',$row[0],$row[1],$row[7]);
@@ -49,11 +38,11 @@ $db = mysql_connect($database['host'], $database['user'], $database['password'])
             printf('    <td align="center" class="content">%s&nbsp;</td>',placed($row[4]));
             printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</td>',$row[5],$row[6]);
         }
+        mysql_free_result($result);
     } else {
         die("Player SQL error");
     }
 
-mysql_free_result($result);
 ?>
 </table><BR><BR>
 

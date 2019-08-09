@@ -13,18 +13,8 @@
  *  updated for server mods  -allan 22Aug14
  ************************************/
 
-$database = array(
-'host'=>'localhost',			// Your DNS hostname or IP address
-'user'=>'eve',				// MySQL User account with access to SELECT on your Eve database
-'password'=>'onlyme',			// MySQL Password
-'db'=>'EVE_Crucible'		        // Name of your EVE Emulator database
-);
-foreach($database as $db_check) {
-	if( $db_check=="" ) die("CHANGE YOUR DB CONFIGS!");
-}
 
-// Init the database connection and other vars
-$db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
+// Init the vars
 $online=0;
 $uptime="<font color=red>Offline</font>";
 $updated=0;
@@ -59,7 +49,7 @@ if( $status )
 	fclose( $status );
 	// yes, server online.  get current status
 	$query="SELECT startTime FROM srvStatus WHERE AI = 1;";
-	if($result=mysql_query($query,$db)) {
+	if($result=mysql_query($query,$connections[ 'cruc' ])) {
 		$row=mysql_fetch_array($result);
 		if( $row['startTime'] ) {
 			$online=1;
@@ -75,7 +65,7 @@ if( $status )
 
 // get count of connections
 $query2="SELECT Connections FROM srvStatus";
-if( $result=mysql_query($query2,$db) ) {
+if( $result=mysql_query($query2,$connections[ 'cruc' ]) ) {
 	$row=mysql_fetch_array($result);
 	$conns = $row[0];
 } else {
@@ -84,7 +74,7 @@ if( $result=mysql_query($query2,$db) ) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysql_query($aquery,$db) ) {
+if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
 	$row=mysql_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
@@ -93,7 +83,7 @@ if( $result=mysql_query($aquery,$db) ) {
 
 // get count of total characters
 $cquery="SELECT count(characterID) AS chars FROM chrCharacters;";
-if( $result=mysql_query($cquery,$db) ) {
+if( $result=mysql_query($cquery,$connections[ 'cruc' ]) ) {
 	$row=mysql_fetch_array($result);
 	$chars = $row['chars'];
 } else {
@@ -104,7 +94,7 @@ if( $result=mysql_query($cquery,$db) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
-	if( $result=mysql_query($query,$db) ) {
+	if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
 		$row=mysql_fetch_array($result);
 		$players = $row['online'];
 	} else {
@@ -113,7 +103,7 @@ if( $online ) {
 	// get saved settings of all dynamic stats
 	global $threads, $items, $systems, $bubbles, $rss, $vm, $user, $kernel;
 	$query2="SELECT threads, items, systems, bubbles, npcs, rss, vm, user, kernel, updateTime FROM srvStatus WHERE AI = 1;";
-	if( $result=mysql_query($query2,$db) ) {
+	if( $result=mysql_query($query2,$connections[ 'cruc' ]) ) {
 		$row=mysql_fetch_array($result);
 		$threads    = $row[0];
 		$items      = $row[1];
@@ -131,7 +121,7 @@ if( $online ) {
 
 	global $pcShots, $pcMissiles, $ramJobs, $shipsSalvaged, $pcBounties, $npcBounties, $oreMined, $iskMarket, $probes, $sites;
     $query3="SELECT pcShots, pcMissiles, ramJobs, shipsSalvaged, pcBounties, npcBounties, oreMined, iskMarket, probesLaunched, sitesScanned FROM srvStatisticHistory WHERE idx = 1;";
-    if( $result=mysql_query($query3,$db) ) {
+    if( $result=mysql_query($query3,$connections[ 'cruc' ]) ) {
         $row=mysql_fetch_array($result);
         $pcShots        = $row[0];
         $pcMissiles     = $row[1];
@@ -243,7 +233,7 @@ if( $players && $online ) {
             LEFT JOIN crpCorporation AS co ON co.corporationID = c.corporationID
             LEFT JOIN mapRegions AS mr USING (regionID)
         WHERE online=1;";
-	if($result=mysql_query($query,$db)) {
+	if($result=mysql_query($query,$connections[ 'cruc' ])) {
 		while($row=mysql_fetch_array($result)) {
 		printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>
                 <td class="content">&nbsp;%s</td>

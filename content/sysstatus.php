@@ -23,27 +23,20 @@
         ------------------------------------------------------------------------------------
         Author:         Almamu		Adrasteia
 */
-$database = array(
-'host'=>'localhost',
-'user'=>'eve',
-'password'=>'onlyme',
-'db'=>'EVE_Crucible'
-);
 
-// Init the database connection and other vars
-$db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
+// Init the vars
 $systems=0;
 $players=0;
 
     $query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
-    if( $result=mysql_query($query,$db) ) {
+    if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
         $row=mysql_fetch_array($result);
         $players = $row['online'];
     } else {
         die("OnlinePlayers SQL error");
     }
     $squery="SELECT count(solarSystemID) AS systems FROM mapDynamicData WHERE active = 1;";
-    if( $result=mysql_query($squery,$db) ) {
+    if( $result=mysql_query($squery,$connections[ 'cruc' ]) ) {
         $row=mysql_fetch_array($result);
         $systems = $row['systems'];
     } else {
@@ -83,7 +76,7 @@ printf('<TR><TD colspan="11">&nbsp;</tr></td>');
             FROM mapDynamicData AS mdd
             LEFT JOIN mapSolarSystems AS mss USING (solarSystemID)
             WHERE mdd.active = 1;";
-    if($result=mysql_query($query2,$db)) {
+    if($result=mysql_query($query2,$connections[ 'cruc' ])) {
         while($row=mysql_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s</td>',$row[0]);
             printf('<td align="center" class="content">&nbsp;%s</td>',$row[1]);
