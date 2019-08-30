@@ -36,8 +36,8 @@
 		}else{
 			// Check if the user exists
 			$query = "SELECT 1 AS correct, role, banned, hash FROM account WHERE accountName='".$_POST[ 'username' ]."' AND hash=BIN('".$hash."');";
-			$gameserver_result = mysql_query( $query, $connections[ 'cruc' ] );
-			if( $row = mysql_fetch_array( $gameserver_result, MYSQL_ASSOC ) )
+			$gameserver_result = mysqli_query( $query, $connections[ 'cruc' ] );
+			if( $row = mysqli_fetch_array( $gameserver_result, MYSQL_ASSOC ) )
 			{
 				if( $row[ 'banned' ] == 1)
 				{

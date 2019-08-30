@@ -70,11 +70,11 @@ else
 	// process the form
 	
 	// clean the username and password
-	$username = mysql_real_escape_string($_POST['username']);
-	$password = mysql_real_escape_string($_POST['password']);
+	$username = mysqli_real_escape_string($_POST['username']);
+	$password = mysqli_real_escape_string($_POST['password']);
 	
 	// check for valid details
-	$sql = mysql_query("INSERT INTO `account` (`accountName`, `role`, `password`)
+	$sql = mysqli_query("INSERT INTO `account` (`accountName`, `role`, `password`)
 					   VALUES ('$username', 4294967231,PASSWORD('$password'))");
 	
 	if ($sql)

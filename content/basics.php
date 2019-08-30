@@ -49,10 +49,10 @@ Server Version: <strong><font color=orange>Crucible</font></strong><BR>
 		Users online:<strong>
 		<?php
 		$query = "SELECT count(online) AS online FROM account WHERE online=1";
-		$result = mysql_query( $query, $connections[ 'cruc' ] );
-		$row = mysql_fetch_array( $result, MYSQL_ASSOC );
+		$result = mysqli_query( $query, $connections[ 'cruc' ] );
+		$row = mysqli_fetch_array( $result, MYSQL_ASSOC );
 		echo $row['online'].'</strong><br>';
-        mysql_free_result($result);
+        mysqli_free_result($result);
 	}
 	?>
 	IP: <strong>eve.alasiya.net</strong><BR>

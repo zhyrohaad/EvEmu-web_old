@@ -1,13 +1,13 @@
 <?php
 
 /* DB Config */
-$mysql_username = "eve";
-$mysql_password = "onlyme";
-$mysql_hostname = "localhost";
-$mysql_dbname = "ore";
-$mysql_protocol = "mysql";
+$mysqli_username = "eve";
+$mysqli_password = "onlyme";
+$mysqli_hostname = "localhost";
+$mysqli_dbname = "ore";
+$mysqli_protocol = "mysql";
 
-$DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
+$DSN = "$mysqli_protocol://$mysqli_username:$mysqli_password@$mysqli_hostname/$mysqli_dbname";
 
 $ORENAMES = array (
 		// Standard ore

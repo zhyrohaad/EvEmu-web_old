@@ -29,15 +29,15 @@ $systems=0;
 $players=0;
 
     $query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
-    if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
-        $row=mysql_fetch_array($result);
+    if( $result=mysqli_query($query,$connections[ 'cruc' ]) ) {
+        $row=mysqli_fetch_array($result);
         $players = $row['online'];
     } else {
         die("OnlinePlayers SQL error");
     }
     $squery="SELECT count(solarSystemID) AS systems FROM mapDynamicData WHERE active = 1;";
-    if( $result=mysql_query($squery,$connections[ 'cruc' ]) ) {
-        $row=mysql_fetch_array($result);
+    if( $result=mysqli_query($squery,$connections[ 'cruc' ]) ) {
+        $row=mysqli_fetch_array($result);
         $systems = $row['systems'];
     } else {
         die("SystemCount SQL error");
@@ -76,8 +76,8 @@ printf('<TR><TD colspan="11">&nbsp;</tr></td>');
             FROM mapDynamicData AS mdd
             LEFT JOIN mapSolarSystems AS mss USING (solarSystemID)
             WHERE mdd.active = 1;";
-    if($result=mysql_query($query2,$connections[ 'cruc' ])) {
-        while($row=mysql_fetch_array($result)) {
+    if($result=mysqli_query($query2,$connections[ 'cruc' ])) {
+        while($row=mysqli_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s</td>',$row[0]);
             printf('<td align="center" class="content">&nbsp;%s</td>',$row[1]);
             printf('<td align="center" class="content">&nbsp;%s</td>',$row[2]);
@@ -93,7 +93,7 @@ printf('<TR><TD colspan="11">&nbsp;</tr></td>');
     } else {
         die("System SQL error");
     }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 <TR><TD colspan="11">&nbsp;</tr></td>
 </table>

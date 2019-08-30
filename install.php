@@ -45,7 +45,7 @@
 	if( !$connections )die();
 
 	$query = "SELECT accountName FROM account WHERE role=".$adminRole.";";
-	$result = mysql_query( $query, $connections[ 'game' ] );
+	$result = mysqli_query( $query, $connections[ 'game' ] );
 
 	if( $result )
 	{
@@ -71,7 +71,7 @@
 			// Ok, no errors, update the DB with the admin info
 			$query = "INSERT INTO account (accountID, accountName, role, password, online, banned) VALUES(NULL, '".$_POST[ 'user' ]."', ".$adminRole.", PASSWORD('".$_POST[ 'pass' ]."'), 0, 0);";
 			// $query = "INSERT INTO userinfo (id, username, password, role, email, banned, lastip) VALUES(0, '".$_POST['user']."', '".sha1($_POST['pass'])."', 2000, '".$_POST['mail']."', 0, '".$uip."')";
-			mysql_query( $query, $connections[ 'game' ] );
+			mysqli_query( $query, $connections[ 'game' ] );
 			die( 'Installation completed succesfuly' );
 		}
 	}

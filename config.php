@@ -70,7 +70,7 @@
     $inc_port = 26007; // EVEmu Inc Server Port
 
 	/* Portal config */
-	$portal_on = true; // Is the portal open ?
+	$portal_on = false; // Is the portal open ?
 
 	/* Role */
 	$adminRole = 7079658624976683008; // Admin role

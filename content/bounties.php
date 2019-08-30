@@ -30,15 +30,15 @@
       LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
       LEFT JOIN crpCorporation AS co ON c.corporationID = co.corporationID  ORDER BY b.bounty DESC;";
-    if($result=mysql_query($query,$connections[ 'cruc' ])) {
-        while($row=mysql_fetch_array($result)) {
+    if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+        while($row=mysqli_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));
             printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</a> (%.3f)</td>',$row[0],$row[1],$row[7]);
             printf('    <td align="center" class="content">&nbsp;%s&nbsp;(%s)</td>',$row[2],$row[8]);
             printf('    <td align="center" class="content">%s&nbsp;</td>',placed($row[4]));
             printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</td>',$row[5],$row[6]);
         }
-        mysql_free_result($result);
+        mysqli_free_result($result);
     } else {
         die("Player SQL error");
     }

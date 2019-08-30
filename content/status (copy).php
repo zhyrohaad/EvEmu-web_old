@@ -24,7 +24,7 @@ foreach($database as $db_check) {
 }
 
 // Init the database connection and other vars
-$db = mysql_connect($database['host'], $database['user'], $database['password']); mysql_select_db($database['db']);
+$db = mysqli_connect($database['host'], $database['user'], $database['password']); mysqli_select_db($database['db']);
 $online=0;
 $uptime="Offline";
 $conns=0;
@@ -35,8 +35,8 @@ $chars=0;
 // get current status 
 $query="select config_value as StartTime from srvStatus where config_name = 'serverStartTime';";
 $query2="select config_value as Connections from srvStatus where config_name = 'connectSinceStartup';";
-if($result=mysql_query($query,$db)) {
-	$row=mysql_fetch_array($result);
+if($result=mysqli_query($query,$db)) {
+	$row=mysqli_fetch_array($result);
 	if( $row['StartTime'] ) {
 		$online=1;
 		// might need to do some local time translations if your server is in a different timezone than your webhost
@@ -60,8 +60,8 @@ if($result=mysql_query($query,$db)) {
 
 // get count of connections
 $query2="select config_value as connections from srvStatus where config_name = 'connectSinceStartup';";
-if( $result=mysql_query($query2,$db) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($query2,$db) ) {
+	$row=mysqli_fetch_array($result);
 	$conns = $row['connections'];
 } else {
 	die("Connection SQL error");
@@ -69,8 +69,8 @@ if( $result=mysql_query($query2,$db) ) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysql_query($aquery,$db) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($aquery,$db) ) {
+	$row=mysqli_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
 	die("Account SQL error");
@@ -80,16 +80,16 @@ if( $result=mysql_query($aquery,$db) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(Online) AS online FROM character_ WHERE Online = 1;";
-	if( $result=mysql_query($query,$db) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($query,$db) ) {
+		$row=mysqli_fetch_array($result);
 		$players = $row['online'];
 	} else {
 		die("OnlinePlayers SQL error");
 	}
 	global $chars;
 	$cquery="SELECT count(characterID) AS chars FROM character_ ;";
-	if( $result=mysql_query($cquery,$db) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($cquery,$db) ) {
+		$row=mysqli_fetch_array($result);
 		$chars = $row['chars'];
 	} else {
 		die("PC Count error");
@@ -131,8 +131,8 @@ if( $players && $online ) {
 					LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
 					LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
 				WHERE Online=1;";
-	if($result=mysql_query($query,$db)) {
-		while($row=mysql_fetch_array($result)) {
+	if($result=mysqli_query($query,$db)) {
+		while($row=mysqli_fetch_array($result)) {
 			print('<tr>');
 			printf('<td>&nbsp;%s</td>',$row[0]);
 			printf('<td>&nbsp;%s</td>',$row[1]);
@@ -147,6 +147,6 @@ if( $players && $online ) {
 	}
 }
 print("</table>");
-mysql_free_result($result);
+mysqli_free_result($result);
 
 ?>

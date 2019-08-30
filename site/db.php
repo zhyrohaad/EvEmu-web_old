@@ -1,6 +1,6 @@
 <?php
 
-@mysql_connect('localhost', 'root', 'none');
-@mysql_select_db('evemu');
+@mysqli_connect('localhost', 'root', 'none');
+@mysqli_select_db('evemu');
 
 ?> 

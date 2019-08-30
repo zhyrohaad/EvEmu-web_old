@@ -162,7 +162,7 @@ class dbcache
 
 	if( $portal_on == false )
 	{
-		echo '<div id="out">The portal is down for maintenance purposes.<br>We will bring it back as soon as posible</div>';
+		echo '<div id="out">Alasiya EvE site is down for maintenance.<br>We will bring it back as soon as possible</div>';
 		die('Website Offline');
 	}
 	timequery();

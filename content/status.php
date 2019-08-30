@@ -49,8 +49,8 @@ if( $status )
 	fclose( $status );
 	// yes, server online.  get current status
 	$query="SELECT startTime FROM srvStatus WHERE AI = 1;";
-	if($result=mysql_query($query,$connections[ 'cruc' ])) {
-		$row=mysql_fetch_array($result);
+	if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+		$row=mysqli_fetch_array($result);
 		if( $row['startTime'] ) {
 			$online=1;
 			$time=time()-$row['startTime'];
@@ -65,8 +65,8 @@ if( $status )
 
 // get count of connections
 $query2="SELECT Connections FROM srvStatus";
-if( $result=mysql_query($query2,$connections[ 'cruc' ]) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($query2,$connections[ 'cruc' ]) ) {
+	$row=mysqli_fetch_array($result);
 	$conns = $row[0];
 } else {
 	die("Connection SQL error");
@@ -74,8 +74,8 @@ if( $result=mysql_query($query2,$connections[ 'cruc' ]) ) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($aquery,$connections[ 'cruc' ]) ) {
+	$row=mysqli_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
 	die("Account SQL error");
@@ -83,8 +83,8 @@ if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
 
 // get count of total characters
 $cquery="SELECT count(characterID) AS chars FROM chrCharacters;";
-if( $result=mysql_query($cquery,$connections[ 'cruc' ]) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($cquery,$connections[ 'cruc' ]) ) {
+	$row=mysqli_fetch_array($result);
 	$chars = $row['chars'];
 } else {
 	die("PC Count error");
@@ -94,8 +94,8 @@ if( $result=mysql_query($cquery,$connections[ 'cruc' ]) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
-	if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($query,$connections[ 'cruc' ]) ) {
+		$row=mysqli_fetch_array($result);
 		$players = $row['online'];
 	} else {
 		die("OnlinePlayers SQL error");
@@ -103,8 +103,8 @@ if( $online ) {
 	// get saved settings of all dynamic stats
 	global $threads, $items, $systems, $bubbles, $rss, $vm, $user, $kernel;
 	$query2="SELECT threads, items, systems, bubbles, npcs, rss, vm, user, kernel, updateTime FROM srvStatus WHERE AI = 1;";
-	if( $result=mysql_query($query2,$connections[ 'cruc' ]) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($query2,$connections[ 'cruc' ]) ) {
+		$row=mysqli_fetch_array($result);
 		$threads    = $row[0];
 		$items      = $row[1];
 		$systems    = $row[2];
@@ -121,8 +121,8 @@ if( $online ) {
 
 	global $pcShots, $pcMissiles, $ramJobs, $shipsSalvaged, $pcBounties, $npcBounties, $oreMined, $iskMarket, $probes, $sites;
     $query3="SELECT pcShots, pcMissiles, ramJobs, shipsSalvaged, pcBounties, npcBounties, oreMined, iskMarket, probesLaunched, sitesScanned FROM srvStatisticHistory WHERE idx = 1;";
-    if( $result=mysql_query($query3,$connections[ 'cruc' ]) ) {
-        $row=mysql_fetch_array($result);
+    if( $result=mysqli_query($query3,$connections[ 'cruc' ]) ) {
+        $row=mysqli_fetch_array($result);
         $pcShots        = $row[0];
         $pcMissiles     = $row[1];
         $ramJobs        = $row[2];
@@ -233,8 +233,8 @@ if( $players && $online ) {
             LEFT JOIN crpCorporation AS co ON co.corporationID = c.corporationID
             LEFT JOIN mapRegions AS mr USING (regionID)
         WHERE online=1;";
-	if($result=mysql_query($query,$connections[ 'cruc' ])) {
-		while($row=mysql_fetch_array($result)) {
+	if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+		while($row=mysqli_fetch_array($result)) {
 		printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>
                 <td class="content">&nbsp;%s</td>
 				<td align="center" class="content">&nbsp;%s&nbsp;(%s)</td>
@@ -247,7 +247,7 @@ if( $players && $online ) {
 		die("Player SQL error");
 	}
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 
 ?>
 </table>

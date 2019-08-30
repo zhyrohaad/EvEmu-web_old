@@ -32,9 +32,9 @@
 		// First check if the character belongs to the player
 
 		$query = "SELECT accountID FROM account WHERE accountName='".$_SESSION[ 'portalUser' ]."';";
-		$result = @mysql_query( $query, $connections[ 'cruc' ] );
+		$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
-		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
+		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
 		if( $row )
 		{
@@ -44,7 +44,7 @@
 		}
 
 		$query = "SELECT characterID, name AS characterName FROM chrCharacters WHERE accountID=".$accountID;
-		$result = @mysql_query( $query, $connections[ 'cruc' ] );
+		$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
 		$characterInfo = array(
 								"id"	=> array(),
@@ -53,7 +53,7 @@
 
 		$n = 0;
 
-		while( $row = @mysql_fetch_array( $result, MYSQL_ASSOC ) )
+		while( $row = @mysqli_fetch_array( $result, MYSQL_ASSOC ) )
 		{
 			$characterInfo[ 'id'   ][ $n ] = $row[ 'characterID' ];
 			$characterInfo[ 'name' ][ $n ] = $row[ 'characterName' ];
@@ -72,9 +72,9 @@
 			echo '</center>';
 		}else{
 			$query = "SELECT accountID FROM chrCharacters WHERE characterID=".$_GET[ 'c' ].";";
-			$result = @mysql_query( $query, $connections[ 'cruc' ] );
+			$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
-			$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
+			$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
 			if( !$row )
 			{
@@ -84,14 +84,14 @@
 				// Ok the character is selected, now fetch all the data, thats gonna hurt!
 				// WHERE ownerID=140000032 AND NOT locationID=140000032
 				$query = "SELECT typeName, categoryID, entity.typeID, entity.locationID, quantity FROM entity LEFT JOIN invtypes ON entity.typeID = invtypes.typeID LEFT JOIN invgroups ON invtypes.groupID = invgroups.groupID WHERE ownerID=".$_GET[ 'c' ]." AND NOT locationID=".$_GET[ 'c' ].";";
-				$result = @mysql_query( $query, $connections[ 'cruc' ] );
+				$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
 ?>
 <div id="iheader">
 <table width=100%>
 <tr><th width=64>Image</th><th>Item Name</th><th>Location</th><th>Quantity</th></tr>
 <?php
-			while( $row = @mysql_fetch_array( $result, MYSQL_ASSOC ) )
+			while( $row = @mysqli_fetch_array( $result, MYSQL_ASSOC ) )
 			{
 				echo '<tr><td>';
 				echo "<a href=\"?p=iteminfo&item=".$row[ 'typeID' ]."\" alt=\"Show item info\"><img width=64 height=64 src=\"".$icon->check( $row[ 'typeID' ] )."\" alt=\"".$row[ 'typeName' ]."\"></a>";
@@ -104,7 +104,7 @@
 				echo '</td></tr>';
 			}
 
-        mysql_free_result($result);
+        mysqli_free_result($result);
 ?>
 </table>
 </div>

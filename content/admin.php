@@ -28,9 +28,9 @@
 	if( isset( $_SESSION[ 'portalUser' ] ) )
 	{
 		$query = "SELECT banned, role, PASSWORD('".$_SESSION[ 'portalPassword' ]."') AS webpass, password FROM account WHERE accountName='".$_SESSION[ 'portalUser' ]."';";
-		$result = @mysql_query( $query, $connections[ 'cruc' ] );
+		$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
-		$row = @mysql_fetch_array( $result, MYSQL_ASSOC );
+		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
 		if( $row )
 		{
@@ -71,7 +71,7 @@
 				include( 'content/admin/panel.php' );
 			}
 		}
-        mysql_free_result($result);
+        mysqli_free_result($result);
 	}
 
 ?>

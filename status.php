@@ -23,8 +23,8 @@ $chars=0;
 
 // get current status
 $query="select startTime from srvStatus";
-if($result=mysql_query($query,$connections[ 'cruc' ])) {
-	$row=mysql_fetch_array($result);
+if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+	$row=mysqli_fetch_array($result);
 	if( $row['startTime'] ) {
 		$online=1;
 		// might need to do some local time translations if your server is in a different timezone than your webhost
@@ -37,8 +37,8 @@ if($result=mysql_query($query,$connections[ 'cruc' ])) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
-	$row=mysql_fetch_array($result);
+if( $result=mysqli_query($aquery,$connections[ 'cruc' ]) ) {
+	$row=mysqli_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
 	die("Account SQL error");
@@ -48,16 +48,16 @@ if( $result=mysql_query($aquery,$connections[ 'cruc' ]) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(Online) AS online FROM chrCharacter WHERE Online = 1;";
-	if( $result=mysql_query($query,$connections[ 'cruc' ]) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($query,$connections[ 'cruc' ]) ) {
+		$row=mysqli_fetch_array($result);
 		$players = $row['online'];
 	} else {
 		die("Player SQL error");
 	}
 	global $chars;
 	$cquery="SELECT count(characterID) AS chars FROM chrCharacter ;";
-	if( $result=mysql_query($cquery,$connections[ 'cruc' ]) ) {
-		$row=mysql_fetch_array($result);
+	if( $result=mysqli_query($cquery,$connections[ 'cruc' ]) ) {
+		$row=mysqli_fetch_array($result);
 		$chars = $row['chars'];
 	} else {
 		die("Characters SQL error");
@@ -99,8 +99,8 @@ if( $players && $online ) {
 					LEFT JOIN corporation AS co ON co.corporationID = c.corporationID
 					LEFT JOIN mapRegions AS mr ON mr.regionID = c.regionID
 				WHERE Online=1;";
-	if($result=mysql_query($query,$connections[ 'cruc' ])) {
-		while($row=mysql_fetch_array($result)) {
+	if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+		while($row=mysqli_fetch_array($result)) {
 			print('<tr>');
 			printf('<td>&nbsp;%s</td>',$row[0]);
 			printf('<td>&nbsp;%s</td>',$row[1]);
@@ -115,6 +115,6 @@ if( $players && $online ) {
 	}
 }
 print("</table>");
-mysql_free_result($result);
+mysqli_free_result($result);
 
 ?>
