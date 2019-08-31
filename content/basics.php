@@ -50,7 +50,7 @@ Server Version: <strong><font color=orange>Crucible</font></strong><BR>
 		<?php
 		$query = "SELECT count(online) AS online FROM account WHERE online=1";
 		$result = mysqli_query($connections[ 'cruc' ], $query );
-		$row = mysqli_fetch_array( $result, MYSQL_ASSOC );
+		$row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
 		echo $row['online'].'</strong><br>';
         mysqli_free_result($result);
 	}

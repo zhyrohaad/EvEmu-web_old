@@ -54,7 +54,7 @@ LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
 	$result = mysqli_query($connections[ 'cruc' ], $query);
 	$pCount = 0;
 
-	while ( $row = mysqli_fetch_array( $result, MYSQL_ASSOC ) )
+	while ( $row = mysqli_fetch_array( $result, MYSQLI_ASSOC ) )
 	{
 		$pInfo[ $pCount ][0] = $row[ 'characterID' ];
 		$pInfo[ $pCount ][1] = $row[ 'name' ];

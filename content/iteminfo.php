@@ -29,9 +29,9 @@
 		if( item_exists( $_GET[ 'item' ] ) )
 		{
 			$query = "SELECT description, typeName, basePrice, raceID FROM invTypes WHERE typeID=".$_GET[ 'item' ].";";
-			$result = @mysqli_query( $query, $connections[ 'cruc' ] );
+			$result = mysqli_query($connections[ 'cruc' ], $query );
 
-			if($result) $row = mysqli_fetch_array( $result, MYSQL_ASSOC );
+			if($result) $row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
 			echo '<div id="iheader"><table width="100%">';
 			echo '<tr><th width=64><center><img src="'.$icon->check( $_GET[ 'item' ] ).'" alt="'.$row[ 'typeName' ].'"></center></th><th>';
 			echo '<strong>Item name</strong>: '.$row[ 'typeName' ].'<br>';

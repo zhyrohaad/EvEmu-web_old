@@ -30,7 +30,7 @@
 		$query = "SELECT banned, role, PASSWORD('".$_SESSION[ 'portalPassword' ]."') AS webpass, password FROM account WHERE accountName='".$_SESSION[ 'portalUser' ]."';";
 		$result = @mysqli_query( $query, $connections[ 'cruc' ] );
 
-		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
+		$row = @mysqli_fetch_array( $result, MYSQLI_ASSOC );
 
 		if( $row )
 		{

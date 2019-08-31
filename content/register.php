@@ -35,7 +35,7 @@
 			// Check if the user exists
 			$query = "SELECT accountName FROM account WHERE accountName='".$_POST[ 'username' ]."';";
 			$gameserver_result = mysqli_query( $query, $connections[ 'cruc' ] );
-			if( $row = mysqli_fetch_array( $gameserver_result, MYSQL_ASSOC ) )
+			if( $row = mysqli_fetch_array( $gameserver_result, MYSQLI_ASSOC ) )
 			{
 				echo '<div id="theader"><table><tr><th><center><font style="color: rgb( 255, 0, 0 );"><strong>Error</strong></font></th></tr><tr><td><center>An account with that name already exists<br>Click <a href="?p=register">here</a> to go back</center></td></tr></table></div>';
 			}else{

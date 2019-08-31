@@ -32,9 +32,9 @@
 		// First check if the character belongs to the player
 
 		$query = "SELECT accountID FROM account WHERE accountName='".$_SESSION[ 'portalUser' ]."';";
-		$result = @mysqli_query( $query, $connections[ 'cruc' ] );
+		$result = mysqli_query($connections[ 'cruc' ], $query );
 
-		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
+		$row = @mysqli_fetch_array( $result, MYSQLI_ASSOC );
 
 		if( $row )
 		{
@@ -53,7 +53,7 @@
 
 		$n = 0;
 
-		while( $row = @mysqli_fetch_array( $result, MYSQL_ASSOC ) )
+		while( $row = @mysqli_fetch_array( $result, MYSQLI_ASSOC ) )
 		{
 			$characterInfo[ 'id'   ][ $n ] = $row[ 'characterID' ];
 			$characterInfo[ 'name' ][ $n ] = $row[ 'characterName' ];
@@ -72,9 +72,9 @@
 			echo '</center>';
 		}else{
 			$query = "SELECT accountID FROM chrCharacters WHERE characterID=".$_GET[ 'c' ].";";
-			$result = @mysqli_query( $query, $connections[ 'cruc' ] );
+			$result = mysqli_query($connections[ 'cruc' ], $query );
 
-			$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
+			$row = @mysqli_fetch_array( $result, MYSQLI_ASSOC );
 
 			if( !$row )
 			{
@@ -91,7 +91,7 @@
 <table width=100%>
 <tr><th width=64>Image</th><th>Item Name</th><th>Location</th><th>Quantity</th></tr>
 <?php
-			while( $row = @mysqli_fetch_array( $result, MYSQL_ASSOC ) )
+			while( $row = @mysqli_fetch_array( $result, MYSQLI_ASSOC ) )
 			{
 				echo '<tr><td>';
 				echo "<a href=\"?p=iteminfo&item=".$row[ 'typeID' ]."\" alt=\"Show item info\"><img width=64 height=64 src=\"".$icon->check( $row[ 'typeID' ] )."\" alt=\"".$row[ 'typeName' ]."\"></a>";

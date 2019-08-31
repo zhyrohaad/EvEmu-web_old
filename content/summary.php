@@ -35,11 +35,11 @@
 <?php
 	$pInfo = array( array() );
 	$query = "SELECT * FROM mapSystemSummary;";
-	$result = mysqli_query( $query, $connections[ 'cruc' ] );
+	$result = mysqli_query($connections[ 'cruc' ], $query );
 	$pCount = 1;
 	$pMax = 0;
 
-	while( $row = mysqli_fetch_array( $result, MYSQL_ASSOC ) )
+	while( $row = mysqli_fetch_array( $result, MYSQLI_ASSOC ) )
 	{
 		$pInfo[ $pCount ][0] = $row[ 'solarSystemName' ];
 		$pInfo[ $pCount ][1] = $row[ 'agent_count' ];
