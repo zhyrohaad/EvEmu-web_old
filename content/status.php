@@ -49,7 +49,8 @@ if( $status )
 	fclose( $status );
 	// yes, server online.  get current status
 	$query="SELECT startTime FROM srvStatus WHERE AI = 1;";
-	if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+	$result = mysqli_query($connections[ 'cruc' ], $query);
+	if($result) {
 		$row=mysqli_fetch_array($result);
 		if( $row['startTime'] ) {
 			$online=1;
@@ -65,7 +66,8 @@ if( $status )
 
 // get count of connections
 $query2="SELECT Connections FROM srvStatus";
-if( $result=mysqli_query($query2,$connections[ 'cruc' ]) ) {
+$result = mysqli_query($connections[ 'cruc' ], $query2);
+if($result) {
 	$row=mysqli_fetch_array($result);
 	$conns = $row[0];
 } else {
@@ -74,7 +76,8 @@ if( $result=mysqli_query($query2,$connections[ 'cruc' ]) ) {
 
 // get count of accounts
 $aquery="SELECT count(accountID) AS accounts FROM account";
-if( $result=mysqli_query($aquery,$connections[ 'cruc' ]) ) {
+$result = mysqli_query($connections[ 'cruc' ], $aquery);
+if($result) {
 	$row=mysqli_fetch_array($result);
 	$accts = $row['accounts'];
 } else {
@@ -83,7 +86,8 @@ if( $result=mysqli_query($aquery,$connections[ 'cruc' ]) ) {
 
 // get count of total characters
 $cquery="SELECT count(characterID) AS chars FROM chrCharacters;";
-if( $result=mysqli_query($cquery,$connections[ 'cruc' ]) ) {
+$result = mysqli_query($connections[ 'cruc' ], $cquery);
+if($result) {
 	$row=mysqli_fetch_array($result);
 	$chars = $row['chars'];
 } else {
@@ -94,7 +98,8 @@ if( $result=mysqli_query($cquery,$connections[ 'cruc' ]) ) {
 if( $online ) {
 	global $players;
 	$query="SELECT count(online) AS online FROM chrCharacters WHERE online = 1;";
-	if( $result=mysqli_query($query,$connections[ 'cruc' ]) ) {
+	$result = mysqli_query($connections[ 'cruc' ], $query);
+	if($result) {
 		$row=mysqli_fetch_array($result);
 		$players = $row['online'];
 	} else {
@@ -103,7 +108,8 @@ if( $online ) {
 	// get saved settings of all dynamic stats
 	global $threads, $items, $systems, $bubbles, $rss, $vm, $user, $kernel;
 	$query2="SELECT threads, items, systems, bubbles, npcs, rss, vm, user, kernel, updateTime FROM srvStatus WHERE AI = 1;";
-	if( $result=mysqli_query($query2,$connections[ 'cruc' ]) ) {
+	$result = mysqli_query($connections[ 'cruc' ], $query2);
+	if($result) {
 		$row=mysqli_fetch_array($result);
 		$threads    = $row[0];
 		$items      = $row[1];
@@ -121,7 +127,8 @@ if( $online ) {
 
 	global $pcShots, $pcMissiles, $ramJobs, $shipsSalvaged, $pcBounties, $npcBounties, $oreMined, $iskMarket, $probes, $sites;
     $query3="SELECT pcShots, pcMissiles, ramJobs, shipsSalvaged, pcBounties, npcBounties, oreMined, iskMarket, probesLaunched, sitesScanned FROM srvStatisticHistory WHERE idx = 1;";
-    if( $result=mysqli_query($query3,$connections[ 'cruc' ]) ) {
+	$result = mysqli_query($connections[ 'cruc' ], $query3);
+	if($result) {
         $row=mysqli_fetch_array($result);
         $pcShots        = $row[0];
         $pcMissiles     = $row[1];
@@ -233,7 +240,8 @@ if( $players && $online ) {
             LEFT JOIN crpCorporation AS co ON co.corporationID = c.corporationID
             LEFT JOIN mapRegions AS mr USING (regionID)
         WHERE online=1;";
-	if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+	$result = mysqli_query($connections[ 'cruc' ], $query);
+	if($result) {
 		while($row=mysqli_fetch_array($result)) {
 		printf('<tr><td class="content"><a href="?p=characterinfo&c=%u">%s</a></td>
                 <td class="content">&nbsp;%s</td>

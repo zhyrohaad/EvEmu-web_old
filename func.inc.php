@@ -40,12 +40,13 @@
 	{
 		global $connections;
 		$query = "SELECT typeID FROM invTypes WHERE typeID=".$itemID;
-		if($result = mysqli_query( $query, $connections['cruc'] ))
+		$result = mysqli_query($connections['cruc'], $query);
+		if($result)
         {
             $row = mysqli_fetch_array( $result, MYSQL_ASSOC );
             if( $row ) return true;
         } else {
-            echo 'Invalid query: ' . mysqli_error() . "\n";
+            echo 'Invalid query: ' . mysqli_error($connections['cruc']) . "\n";
             echo 'Whole query: ' . $query;
             return false;
         }
@@ -134,41 +135,41 @@
 	function mysqli_crucible_connect()
 	{
 		include( 'config.php' );
-		$hndSQL = mysqli_connect( $sql_crucible_host, $sql_crucible_user, $sql_crucible_pass, true );
-		mysqli_select_db( $sql_crucible_db, $hndSQL );
-		return $hndSQL;
+		return mysqli_connect( $sql_crucible_host, $sql_crucible_user, $sql_crucible_pass, $sql_crucible_db );
+		//mysqli_select_db( $sql_crucible_db, $hndSQL );
+		//return $hndSQL;
 	}
 
 	function mysqli_crucible_test_connect()
 	{
 		include( 'config.php' );
-		$hndSQL = mysqli_connect( $sql_crucible_test_host, $sql_crucible_test_user, $sql_crucible_test_pass, true );
-		mysqli_select_db( $sql_crucible_test_db, $hndSQL );
-		return $hndSQL;
+		return mysqli_connect( $sql_crucible_test_host, $sql_crucible_test_user, $sql_crucible_test_pass, $sql_crucible_test_db );
+		//mysqli_select_db( $sql_crucible_test_db, $hndSQL );
+		//return $hndSQL;
 	}
 
 	function mysqli_apocrypha_connect()
 	{
 		include( 'config.php' );
-		$hndSQL = mysqli_connect( $sql_apocrypha_host, $sql_apocrypha_user, $sql_apocrypha_pass, true );
-		mysqli_select_db( $sql_apocrypha_db, $hndSQL );
-		return $hndSQL;
+		return mysqli_connect( $sql_apocrypha_host, $sql_apocrypha_user, $sql_apocrypha_pass, $sql_apocrypha_db );
+		//mysqli_select_db( $sql_apocrypha_db, $hndSQL );
+		//return $hndSQL;
 	}
 
 	function mysqli_incursion_connect()
 	{
 		include( 'config.php' );
-		$hndSQL = mysqli_connect( $sql_incursion_host, $sql_incursion_user, $sql_incursion_pass, true );
-		mysqli_select_db( $sql_incursion_db, $hndSQL );
-		return $hndSQL;
+		return mysqli_connect( $sql_incursion_host, $sql_incursion_user, $sql_incursion_pass, $sql_incursion_db );
+		//mysqli_select_db( $sql_incursion_db, $hndSQL );
+		//return $hndSQL;
 	}
 
 	function mysqli_portal_connect()
 	{
 		include( 'config.php' );
-		$hndSQL = mysqli_connect( $sql_portal_host, $sql_portal_user, $sql_portal_pass, true );
-		mysqli_select_db( $sql_portal_db, $hndSQL );
-		return $hndSQL;
+		return mysqli_connect( $sql_portal_host, $sql_portal_user, $sql_portal_pass, $sql_portal_db );
+		//mysqli_select_db( $sql_portal_db, $hndSQL );
+		//return $hndSQL;
 	}
 
 	function initDB()
@@ -177,44 +178,44 @@
 		$sql_crucible_connection = @mysqli_crucible_connect();
 		if( !$sql_crucible_connection )
 		{
-			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error().'</div>';
+			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error($sql_crucible_connection).'</div>';
 			return false;
 		}
-
+/*
 		$sql_crucible_test_connection = @mysqli_crucible_test_connect();
 		if( !$sql_crucible_test_connection )
 		{
-			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error().'</div>';
+			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error($sql_crucible_test_connection).'</div>';
 			return false;
 		}
 
 		$sql_apocrypha_connection = @mysqli_apocrypha_connect();
 		if( !$sql_apocrypha_connection )
 		{
-			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error().'</div>';
+			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error($sql_apocrypha_connection).'</div>';
 			return false;
 		}
 
 		$sql_incursion_connection = @mysqli_incursion_connect();
 		if( !$sql_apocrypha_connection )
 		{
-			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error().'</div>';
+			echo '<div id="out">Can\'t connect to the gameserver DB. MySQL Error: '.mysqli_error($sql_incursion_connection).'</div>';
 			return false;
 		}
-
 		$sql_portal_connection = @mysqli_portal_connect();
 		if( !$sql_portal_connection )
 		{
-			echo '<div id="out">Can\'t connecto to the portal DB. MySQL Error: '.mysqli_error().'</div>';
+			echo '<div id="out">Can\'t connect to the portal DB. MySQL Error: '.mysqli_error($sql_portal_connection).'</div>';
 			return false;
 		}
+*/
 
 		$connections = array(
 			'cruc' => $sql_crucible_connection,
-            'test' => $sql_crucible_test_connection,
-			'apoc' => $sql_apocrypha_connection,
-			'inc' => $sql_incursion_connection,
-			'portal' => $sql_portal_connection
+          //  'test' => $sql_crucible_test_connection,
+		//	'apoc' => $sql_apocrypha_connection,
+		//	'inc' => $sql_incursion_connection,
+		//	'portal' => $sql_portal_connection
 		);
 
 		return $connections;
@@ -224,10 +225,10 @@
 	{
 		global $connections;
 		mysqli_close( $connections[ 'cruc' ] );
-		mysqli_close( $connections[ 'test' ] );
-		mysqli_close( $connections[ 'apoc' ] );
-		mysqli_close( $connections[ 'inc' ] );
-		mysqli_close( $connections[ 'portal' ] );
+		//mysqli_close( $connections[ 'test' ] );
+		//mysqli_close( $connections[ 'apoc' ] );
+		//mysqli_close( $connections[ 'inc' ] );
+		//mysqli_close( $connections[ 'portal' ] );
 	}
 
 	function get_station_name( $stationid )
@@ -235,7 +236,7 @@
 		global $connections;
 		if( $stationid == 0 )return 'Somewhere in space';
 		$qquery = "SELECT stationName FROM staStations WHERE stationID=".$stationid.";";
-		$qresult = @mysqli_query( $qquery, $connections['cruc'] );
+		$qresult = mysqli_query($connections['cruc'], $query);
 
 		$qrow = @mysqli_fetch_array( $qresult, MYSQL_ASSOC );
 
@@ -247,7 +248,7 @@
 		global $connections;
 		if( $accountid == 0 ) return 'Anonymous';
 		$query = "SELECT accountName FROM account WHERE accountID=".$accountid.";";
-		$result = mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -267,7 +268,7 @@
 		global $connections;
 		include( 'config.php' );
 		$query = "SELECT characterID FROM chrCharacters WHERE accountID=".$accountID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -279,7 +280,7 @@
 		global $connections;
 		include( 'config.php' );
 		$query = "SELECT characterID FROM chrCharacters WHERE accountID=".$accountID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -291,7 +292,7 @@
 		global $connections;
 		if( empty( $accountName ) )return 0;
 		$query = "SELECT accountID FROM account WHERE accountName='".$accountName."';";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -302,7 +303,7 @@
 	{
 		global $connections;
 		$query = "SELECT date, creatorID FROM forum_replies WHERE topicid=".$post." ORDER BY id DESC";
-		$result = @mysqli_query( $query, $connections[ 'portal' ] );
+		$result = mysqli_query($connections['portal'], $query);
 
 		$row = mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -322,7 +323,7 @@
 		global $connections;
 
 		$query = "SELECT date, creatorID FROM forum_topics WHERE categoryID=".$categoryID." ORDER BY date DESC";
-		$result = @mysqli_query( $query, $connections[ 'portal' ] );
+		$result = mysqli_query($connections['portal'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -351,7 +352,7 @@
 		}
 
 		$query = "SELECT name FROM chrCharacters WHERE characterID=".$characterID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -367,7 +368,7 @@
 		}
 
 		$query = "SELECT characterID FROM chrCharacters WHERE name='".$characterName."';";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -379,7 +380,7 @@
 		global $connections;
 		if( empty( $corporationID ) ) return 'None';
 		$query = "SELECT corporationName FROM crpCorporation WHERE corporationID=".$corporationID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -390,7 +391,7 @@
 	{
 		global $connections;
 		$query = "SELECT raceName FROM chrRaces WHERE raceID=".$raceID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -414,14 +415,14 @@
 		}
 
         $query = "SELECT careerName FROM chrCareers WHERE careerID=".$careerID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
 		$careerName = $row[ 'careerName' ];
 
 		$query = "SELECT ancestryName, bloodlineID FROM chrAncestries WHERE ancestryID=".$ancestryID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -429,7 +430,7 @@
 		$bloodlineID = $row[ 'bloodlineID' ];
 
 		$query = "SELECT bloodlineName, raceID FROM chrBloodlines WHERE bloodlineID=".$bloodlineID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -437,7 +438,7 @@
 		$raceName = get_race_name( $row[ 'raceID' ] );
 
 		$query = "SELECT schoolName FROM chrSchools WHERE schoolID=".$schoolID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -458,8 +459,8 @@
 	{
 		global $connections;
 		$query = "SELECT corporationID, securityRating, ancestryID, careerID, schoolID, careerSpecialityID, gender, stationID FROM chrCharacters WHERE characterID=".$characterID.";";
-		$result = @mysqli_query( $query, $connections['cruc'] );
-
+		$result = mysqli_query($connections['cruc'], $query);
+		
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
 		$info = array(
@@ -504,7 +505,7 @@
 		global $connections;
 		include( 'config.php' );
 		$query = "SELECT role FROM account WHERE accountName='".$characterName."';";
-		$result = @mysqli_query( $query, $connections['cruc'] );
+		$result = mysqli_query($connections['cruc'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -521,7 +522,7 @@
 		global $connections;
 		include( 'config.php' );
 		$query = "SELECT name FROM forum_topics WHERE id=".$topicID.";";
-		$result = @mysqli_query( $query, $connections[ 'portal' ] );
+		$result = mysqli_query($connections['portal'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 
@@ -534,7 +535,7 @@
 		include( 'config.php' );
 
 		$query = "SELECT topicID FROM forum_replies WHERE id=".$replyID.";";
-		$result = @mysqli_query( $query, $connections[ 'portal' ] );
+		$result = mysqli_query($connections['portal'], $query);
 
 		$row = @mysqli_fetch_array( $result, MYSQL_ASSOC );
 

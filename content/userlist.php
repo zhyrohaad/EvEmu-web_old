@@ -51,7 +51,7 @@ LEFT JOIN staStations AS stb ON (stb.stationID = c.baseID)
 LEFT JOIN mapSolarSystems AS ss ON (ss.solarSystemID = c.solarSystemID)
 LEFT JOIN entity AS e ON (e.itemID = c.shipID)
 LEFT JOIN invTypes AS it ON (it.typeID = e.typeID) ORDER BY characterID";
-	$result = mysqli_query( $query, $connections[ 'cruc' ] );
+	$result = mysqli_query($connections[ 'cruc' ], $query);
 	$pCount = 0;
 
 	while ( $row = mysqli_fetch_array( $result, MYSQL_ASSOC ) )

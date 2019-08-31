@@ -30,7 +30,8 @@
       LEFT JOIN chrCharacters AS c ON b.characterID = c.characterID
       LEFT JOIN chrCharacters AS c2 ON b.ownerID = c2.characterID
       LEFT JOIN crpCorporation AS co ON c.corporationID = co.corporationID  ORDER BY b.bounty DESC;";
-    if($result=mysqli_query($query,$connections[ 'cruc' ])) {
+	$result = mysqli_query($connections[ 'cruc' ], $query);
+	if($result) {
         while($row=mysqli_fetch_array($result)) {
             printf('<tr><td align="center" class="content">%s&nbsp;ISK</td>',number_format($row[3],2));
             printf('    <td align="center" class="content"><a href="?p=characterinfo&c=%u">%s</a> (%.3f)</td>',$row[0],$row[1],$row[7]);
